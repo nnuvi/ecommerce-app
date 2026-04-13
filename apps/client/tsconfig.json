@@ -17,12 +17,10 @@
       {
         "name": "next"
       }
-    ],
-    "baseUrl": ".", 
+    ], 
     "paths": {
       "@/*": ["./*"],
-      "@types": ["src/app/types"],
-      "@types/*": ["types/*"]
+      "@types": ["./src/app/types"]
     }
   },
   "include": [
