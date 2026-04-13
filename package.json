@@ -1,14 +1,10 @@
 {
   "private": true,
-  "workspaces": [
-    "apps/*",
-    "services/*"
-  ],
   "scripts": {
-    "dev:client": "npm run dev --workspace=apps/client",
-    "dev:admin": "npm run dev --workspace=apps/admin",
-    "dev:product": "npm run dev --workspace=services/product-service",
-    "dev:order": "npm run dev --workspace=services/order-service",
-    "dev:auth": "npm run dev --workspace=services/auth-service"
+    "dev:client": "cd client && npm run dev",
+    "dev:admin": "cd admin && npm run dev",
+    "dev:product": "cd product-service && npm run dev",
+    "dev:order": "cd order-service && npm run dev",
+    "dev:auth": "cd auth-service && npm run dev"
   }
 }
