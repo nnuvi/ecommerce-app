@@ -15,7 +15,11 @@ app.use(
 app.use(express.json());
 
 app.get("/", (req, res) => {
-  res.send("Product Service Running");
+  res.status(200).json({
+    start: "ok",
+    uptime:process.uptime(),
+    timestamp: Date.now()
+  });
 });
 
 const PORT = process.env.PORT || 8008;

@@ -125,6 +125,12 @@ interface ChartTooltipContentProps extends Omit<TooltipProps<number, string>, "c
   color?: string;
 }
 
+type ChartPayload = {
+  name: string;
+  value: number;
+  color?: string;
+};
+
 function ChartTooltipContent({
   active,
   payload = [],
