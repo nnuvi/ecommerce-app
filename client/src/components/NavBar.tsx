@@ -3,6 +3,8 @@ import Image from "next/image";
 import Link from "next/link";
 import SearchBar from "./SearchBar";
 import ShoppingCartIcon from "./ShoppingCartIcon";
+import { Show, SignInButton, SignUpButton, UserButton } from "@clerk/nextjs";
+import ProfileButton from "./ProfileButton";
 
 const NavBar = () => {
   return (
@@ -25,7 +27,14 @@ const NavBar = () => {
         </Link>
         <Bell className="w-5 h-5 text-gray-600" />
         <ShoppingCartIcon />
-        <Link href={""}>Sign in</Link>
+        <header className="flex justify-end items-center p-4 gap-4 h-16">
+          <Show when="signed-out">
+            <SignInButton />
+          </Show>
+          <Show when="signed-in">
+            <ProfileButton />
+          </Show>
+        </header>
       </div>
     </nav>
   );

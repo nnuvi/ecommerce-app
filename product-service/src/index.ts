@@ -1,6 +1,8 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
+import { clerkMiddleware, getAuth } from '@clerk/express'
+import { shouldBeUser } from "./middleware/authMiddleware.js";
 
 dotenv.config();
 
@@ -13,6 +15,7 @@ app.use(
     })
 );
 app.use(express.json());
+app.use(clerkMiddleware());
 
 app.get("/", (req, res) => {
   res.status(200).json({
@@ -20,6 +23,13 @@ app.get("/", (req, res) => {
     uptime:process.uptime(),
     timestamp: Date.now()
   });
+});
+
+app.get("/health", shouldBeUser, (req, res) => {
+  res.json({
+    message: "Product Service Authenticated!!!",
+    userId: req.userId
+  })
 });
 
 const PORT = process.env.PORT || 8008;

@@ -1,8 +1,8 @@
 {
   "compilerOptions": {
-    "module": "nodenext",
+    "target": "ESNext",
+    "module": "NodeNext",
     "moduleResolution": "nodenext",
-    "target": "esnext",
     "types": ["node"],
     "strict": true,
     "verbatimModuleSyntax": false,
