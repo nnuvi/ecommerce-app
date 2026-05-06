@@ -10,6 +10,7 @@ import { ArrowRight, Trash2 } from "lucide-react";
 import PaymentForm from "@/src/components/PaymentForm";
 import ShippingForm from "@/src/components/ShippingForm";
 import useCartStore from "../store/cartStore";
+import StripePaymentForm from "@/src/components/StripePaymentForm";
 
 const steps = [
   {
@@ -46,21 +47,21 @@ const steps = [
 //     selectedSize: "m",
 //     selectedColor: "gray",
 //   },
-//   {
-//     id: 2,
-//     name: "Puma Ultra Warm Zip",
-//     shortDescription:
-//       "Lorem ipsum dolor sit amet consect adipisicing elit lorem ipsum dolor sit.",
-//     description:
-//       "Lorem ipsum dolor sit amet consect adipisicing elit lorem ipsum dolor sit. Lorem ipsum dolor sit amet consect adipisicing elit lorem ipsum dolor sit. Lorem ipsum dolor sit amet consect adipisicing elit lorem ipsum dolor sit.",
-//     price: 59.9,
-//     sizes: ["s", "m", "l", "xl"],
-//     colors: ["gray", "green"],
-//     images: { gray: "/products/2g.png", green: "/products/2gr.png" },
-//     quantity: 1,
-//     selectedSize: "m",
-//     selectedColor: "green",
-//   },
+  // {
+  //   id: 2,
+  //   name: "Puma Ultra Warm Zip",
+  //   shortDescription:
+  //     "Lorem ipsum dolor sit amet consect adipisicing elit lorem ipsum dolor sit.",
+  //   description:
+  //     "Lorem ipsum dolor sit amet consect adipisicing elit lorem ipsum dolor sit. Lorem ipsum dolor sit amet consect adipisicing elit lorem ipsum dolor sit. Lorem ipsum dolor sit amet consect adipisicing elit lorem ipsum dolor sit.",
+  //   price: 59.9,
+  //   sizes: ["s", "m", "l", "xl"],
+  //   colors: ["gray", "green"],
+  //   images: { gray: "/products/2g.png", green: "/products/2gr.png" },
+  //   quantity: 1,
+  //   selectedSize: "m",
+  //   selectedColor: "green",
+  // },
 //   {
 //     id: 3,
 //     name: "Nike Air Essentials Pullover",
@@ -189,7 +190,8 @@ const CartPage = () => {
           ) : activeStep === 2 ? (
             <ShippingForm setShippingForm={setShippingForm} />
           ) : activeStep === 3 && shippingForm ? (
-            <PaymentForm />
+            // <PaymentForm />
+            <StripePaymentForm shippingForm={shippingForm} />
           ) : (
             <p className="text-sm text-gray-500">
               Please fill in the shipping form to continue.
