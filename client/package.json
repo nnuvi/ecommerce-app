@@ -9,6 +9,8 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@packages/kafka": "workspace:*",
+    "@packages/types": "workspace:*",
     "@clerk/nextjs": "^7.2.3",
     "@hookform/resolvers": "^5.2.2",
     "@stripe/react-stripe-js": "^6.3.0",

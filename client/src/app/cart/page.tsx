@@ -5,12 +5,11 @@ import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useSearchParams } from "next/navigation";
-import { CartItemsType, CartItemType, ShippingFormInputs } from "../types";
+import type { CartItemsType, CartItemType, ShippingFormInputs } from "@packages/types";
 import { ArrowRight, Trash2 } from "lucide-react";
-import PaymentForm from "@/src/components/PaymentForm";
-import ShippingForm from "@/src/components/ShippingForm";
+import ShippingForm from "../../components/ShippingForm";
 import useCartStore from "../store/cartStore";
-import StripePaymentForm from "@/src/components/StripePaymentForm";
+import StripePaymentForm from "../../components/StripePaymentForm";
 
 const steps = [
   {
@@ -26,77 +25,6 @@ const steps = [
     title: "Payment Method",
   },
 ];
-
-// const cartItems: CartItemsType = [
-//   {
-//     id: 1,
-//     name: "Adidas CoreFit T-Shirt",
-//     shortDescription:
-//       "Lorem ipsum dolor sit amet consect adipisicing elit lorem ipsum dolor sit.",
-//     description:
-//       "Lorem ipsum dolor sit amet consect adipisicing elit lorem ipsum dolor sit. Lorem ipsum dolor sit amet consect adipisicing elit lorem ipsum dolor sit. Lorem ipsum dolor sit amet consect adipisicing elit lorem ipsum dolor sit.",
-//     price: 39.9,
-//     sizes: ["s", "m", "l", "xl", "xxl"],
-//     colors: ["gray", "purple", "green"],
-//     images: {
-//       gray: "/products/1g.png",
-//       purple: "/products/1p.png",
-//       green: "/products/1gr.png",
-//     },
-//     quantity: 1,
-//     selectedSize: "m",
-//     selectedColor: "gray",
-//   },
-  // {
-  //   id: 2,
-  //   name: "Puma Ultra Warm Zip",
-  //   shortDescription:
-  //     "Lorem ipsum dolor sit amet consect adipisicing elit lorem ipsum dolor sit.",
-  //   description:
-  //     "Lorem ipsum dolor sit amet consect adipisicing elit lorem ipsum dolor sit. Lorem ipsum dolor sit amet consect adipisicing elit lorem ipsum dolor sit. Lorem ipsum dolor sit amet consect adipisicing elit lorem ipsum dolor sit.",
-  //   price: 59.9,
-  //   sizes: ["s", "m", "l", "xl"],
-  //   colors: ["gray", "green"],
-  //   images: { gray: "/products/2g.png", green: "/products/2gr.png" },
-  //   quantity: 1,
-  //   selectedSize: "m",
-  //   selectedColor: "green",
-  // },
-//   {
-//     id: 3,
-//     name: "Nike Air Essentials Pullover",
-//     shortDescription:
-//       "Lorem ipsum dolor sit amet consect adipisicing elit lorem ipsum dolor sit.",
-//     description:
-//       "Lorem ipsum dolor sit amet consect adipisicing elit lorem ipsum dolor sit. Lorem ipsum dolor sit amet consect adipisicing elit lorem ipsum dolor sit. Lorem ipsum dolor sit amet consect adipisicing elit lorem ipsum dolor sit.",
-//     price: 69.9,
-//     sizes: ["s", "m", "l"],
-//     colors: ["green", "blue", "black"],
-//     images: {
-//       green: "/products/3gr.png",
-//       blue: "/products/3b.png",
-//       black: "/products/3bl.png",
-//     },
-//     quantity: 1,
-//     selectedSize: "l",
-//     selectedColor: "black",
-//   },
-//   {
-//     id: 4,
-//     name: "Nike Dri Flex T-Shirt",
-//     shortDescription:
-//       "Lorem ipsum dolor sit amet consect adipisicing elit lorem ipsum dolor sit.",
-//     description:
-//       "Lorem ipsum dolor sit amet consect adipisicing elit lorem ipsum dolor sit. Lorem ipsum dolor sit amet consect adipisicing elit lorem ipsum dolor sit. Lorem ipsum dolor sit amet consect adipisicing elit lorem ipsum dolor sit.",
-//     price: 29.9,
-//     sizes: ["s", "m", "l"],
-//     colors: ["white", "pink"],
-//     images: { white: "/products/4w.png", pink: "/products/4p.png" },
-//     quantity: 1,
-//     selectedSize: "m",
-//     selectedColor: "white",
-//   },
-// ];
 
 const CartPage = () => {
   const searchParams = useSearchParams();

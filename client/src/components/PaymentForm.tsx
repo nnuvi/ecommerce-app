@@ -1,4 +1,4 @@
-import { PaymentFormInputs, paymentFormSchema } from "@types";
+import { PaymentFormInputs, paymentFormSchema } from "@packages/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ArrowRight, ShoppingCart } from "lucide-react";
 import Image from "next/image";

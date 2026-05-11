@@ -1,6 +1,8 @@
 import { getAuth } from "@clerk/express";
 import { Request, Response, NextFunction } from "express";
-import type { CustomJwtSessionClaims } from "../types/auth.js";
+import { CustomJwtSessionClaims } from "@packages/types";
+import type { OrderType } from "@packages/types";
+
 
 declare global {
   namespace Express {

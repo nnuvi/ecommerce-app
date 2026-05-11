@@ -48,8 +48,7 @@ export const deleteProduct = async (req: Request, res: Response) => {
 
 export const getProduct = async (req: Request, res: Response) => {
   const { id } = req.params;
-  console.log('Here: id', id)
-   
+  console.log(`Controller: Fetching product with ID: ${id}`);
 
   const product = await prisma.product.findUnique({
     where: { id: Number(id) },
@@ -89,9 +88,7 @@ export const getProducts = async (req: Request, res: Response) => {
     orderBy,
     take: limit ? Number(limit) : undefined,
   });
-  
-  console.log('Here: products: ', products)
-   
+  console.log(`Controller: Fetching products with category: ${category}, search: ${search}`);
   res.status(200).json(products);
 };
 

@@ -1,11 +1,38 @@
 {
+  "name": "ecom",
   "private": true,
   "scripts": {
-    "dev:client": "cd client && npm run dev",
-    "dev:admin": "cd admin && npm run dev",
-    "dev:product": "cd product-service && npm run dev",
-    "dev:order": "cd order-service && npm run dev",
-    "dev:payment": "cd payment-service && npm run dev",
-    "dev:auth": "cd auth-service && npm run dev"
+    "dev:client": "pnpm --filter client dev",
+    "dev:admin": "pnpm --filter admin dev",
+    "dev:product": "pnpm --filter product-service dev",
+    "dev:order": "pnpm --filter order-service dev",
+    "dev:payment": "pnpm --filter payment-service dev",
+    "dev:auth": "pnpm --filter auth-service dev",
+
+    "dev:types": "pnpm --filter @packages/types dev",
+    "dev:kafka": "pnpm --filter @packages/kafka dev",
+    "dev:packages": "pnpm --parallel --filter @packages/types --filter @packages/kafka dev",
+
+    "dev:services": "pnpm --parallel dev:product dev:order dev:payment dev:auth",
+    "dev:web": "pnpm --parallel dev:client dev:admin",
+
+    "dev": "pnpm --parallel dev:packages dev:services dev:web"
+  },
+
+  "packageManager": "pnpm@11.0.8",
+  "workspaces": [
+    "client",
+    "admin",  
+    "auth-service",
+    "product-service",
+    "order-service",
+    "payment-service",
+    "packages/*"
+  ],
+
+  "devDependencies": {
+    "concurrently": "^9.2.1",
+    "tsx": "^4.21.0",
+    "typescript": "^6.0.3"
   }
 }

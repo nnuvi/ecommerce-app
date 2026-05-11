@@ -1,0 +1,23 @@
+packages:
+  - "client"
+  - "admin"
+  - "product-service"
+  - "order-service"
+  - "payment-service"
+  - "auth-service"
+  - "packages/*"
+allowBuilds:
+  '@clerk/shared': true
+  '@prisma/engines': true
+  esbuild: true
+  prisma: true
+  sharp: true
+  unrs-resolver: true
+
+# allowBuilds:
+#   '@clerk/shared': set this to true or false
+#   '@prisma/engines': set this to true or false
+#   esbuild: set this to true or false
+#   prisma: set this to true or false
+#   sharp: set this to true or false
+#   unrs-resolver: set this to true or false

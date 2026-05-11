@@ -1,16 +1,20 @@
 {
   "name": "payment-service",
   "type": "module",
+  "main": "dist/index.js",
   "scripts": {
     "dev": "tsx watch src/index.ts",
     "build": "tsc",
-    "start": "node dist/index.ts"
+    "start": "node dist/index.js"
   },
   "dependencies": {
+    "@packages/kafka": "workspace:*",
+    "@packages/types": "workspace:*",
     "@clerk/hono": "^0.1.22",
     "@hono/node-server": "^1.19.14",
     "dotenv": "^17.4.2",
     "hono": "^4.12.14",
+    "kafkajs": "^2.2.4",
     "stripe": "^22.1.0",
     "zod": "^4.4.2"
   },

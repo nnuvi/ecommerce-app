@@ -4,9 +4,13 @@ import connectDB from "./config/db.js";
 import { clerkClient, clerkPlugin, getAuth } from "@clerk/fastify";
 import { shouldBeUser } from "../src/middleware/authMiddleware.js";
 import { orderRoute } from "./routes/order.js";
+import { runKafkaSubscriptions } from "./libs/subscriptions.js";
+import { consumer, producer } from "./libs/kafka.js";
 
 dotenv.config({ debug: true });
-const fastify = Fastify();
+const fastify = Fastify({
+  logger: false ,
+});
 
 fastify.register(clerkPlugin, {
   publishableKey: process.env.CLERK_PUBLISHABLE_KEY!,
@@ -37,7 +41,12 @@ fastify.register(orderRoute);
 
 const start = async () => {
   try {
-    await connectDB();
+    Promise.all([
+      await connectDB(),
+      await producer.connect(),
+      await consumer.connect(),
+    ]);
+    await runKafkaSubscriptions();
     await fastify.listen({ port: 8888 });
     console.log(`Order Service running on PORT:8888`);
   } catch (err) {

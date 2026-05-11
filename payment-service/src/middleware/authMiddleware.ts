@@ -1,6 +1,6 @@
 import { getAuth } from "@clerk/hono";
 import { createMiddleware } from "hono/factory";
-import type { CustomJwtSessionClaims } from "../types/auth.js";
+import type { CustomJwtSessionClaims } from "@packages/types";
 
 export const shouldBeUser = createMiddleware<{
   Variables: {

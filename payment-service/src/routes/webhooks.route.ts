@@ -1,7 +1,7 @@
 import { Hono } from "hono";
 import Stripe from "stripe";
-import stripe from "../utils/stripe.js";
-// import { producer } from "../utils/kafka";
+import stripe from "../libs/stripe.js";
+import { producer } from "./../libs/kafka.js";
 
 const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET as string;
 const webhookRoute = new Hono();
@@ -15,11 +15,10 @@ webhookRoute.get("/", (c) => {
 });
 
 webhookRoute.post("/stripe", async (c) => {
-      console.log("Webhook here");
-  
+  console.log("Webhook here");
+
   const body = await c.req.text();
   const sig = c.req.header("stripe-signature");
-
 
   let event: Stripe.Event;
 
@@ -32,7 +31,6 @@ webhookRoute.post("/stripe", async (c) => {
 
   switch (event.type) {
     case "payment_intent.succeeded":
-
       const paymentIntent = event.data.object as Stripe.PaymentIntent;
 
       console.log("Payment succeeded:", paymentIntent.id);
@@ -49,19 +47,15 @@ webhookRoute.post("/stripe", async (c) => {
         cart,
       });
       // TODO: CREATE ORDER
-      //   producer.send("payment.successful", {
-      //     value: {
-      //       userId: session.client_reference_id,
-      //       email: session.customer_details?.email,
-      //       amount: session.amount_total,
-      //       status: session.payment_status === "paid" ? "success" : "failed",
-      //       products: lineItems.data.map((item) => ({
-      //         name: item.description,
-      //         quantity: item.quantity,
-      //         price: item.price?.unit_amount,
-      //       })),
-      //     },
-      //   });
+      await producer.send("payment.successful", {
+        value: {
+          userId: paymentIntent.metadata.userId ?? "",
+          email: paymentIntent.metadata.email ?? "",
+          amount: paymentIntent.amount,
+          status: paymentIntent.status === "succeeded" ? "success" : "failed",
+          products: JSON.parse(paymentIntent.metadata.cart || "[]"),
+        },
+      });
 
       break;
 

@@ -1,11 +1,8 @@
 {
+  "extends": "../tsconfig.base.json",
   "compilerOptions": {
-    "target": "ESNext",
     "module": "NodeNext",
-    "moduleResolution": "nodenext",
-    "types": ["node"],
-    "strict": true,
-    "verbatimModuleSyntax": false,
-    "skipLibCheck": true
+    "moduleResolution": "NodeNext",
+    "types": ["node"]
   }
 }

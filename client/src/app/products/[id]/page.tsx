@@ -1,5 +1,5 @@
 import ProductInteraction from "./../../../components/ProductIteractions";
-import { ProductType } from "@types";
+import type { ProductType } from "@packages/types";
 import Image from "next/image";
 
 const product: ProductType = {
@@ -17,6 +17,9 @@ const product: ProductType = {
     purple: "/products/1p.png",
     green: "/products/1gr.png",
   },
+  createdAt: new Date(),
+  updatedAt: new Date(),
+  categorySlug: "tshirts",
 };
 
 export const generateMetadata = async ({

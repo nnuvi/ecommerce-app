@@ -1,9 +1,5 @@
 {
   "name": "order-service",
-  "version": "1.0.0",
-  "description": "",
-  "license": "ISC",
-  "author": "",
   "type": "module",
   "main": "dist/index.js",
   "scripts": {
@@ -12,9 +8,12 @@
     "start": "node dist/index.js"
   },
   "dependencies": {
+    "@packages/kafka": "workspace:*",
+    "@packages/types": "workspace:*",
     "@clerk/fastify": "^3.1.15",
     "dotenv": "^17.4.2",
     "fastify": "^5.8.5",
+    "kafkajs": "^2.2.4",
     "mongodb": "^7.2.0",
     "mongoose": "^9.6.1"
   },

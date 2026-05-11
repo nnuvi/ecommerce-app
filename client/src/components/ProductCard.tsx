@@ -5,7 +5,7 @@ import useCartStore from "../app/store/cartStore";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
-import { ProductType } from "../app/types";
+import { ProductType } from "@packages/types";
 import { toast } from "react-toastify";
 
 const ProductCard = ({ product }: { product: ProductType }) => {
@@ -41,7 +41,7 @@ const ProductCard = ({ product }: { product: ProductType }) => {
 
   return (
     <div className="shadow-lg rounded-lg overflow-hidden bg-stone-50">
-      <Link href={"/products/$product.id"}>
+      <Link href={`/products/${product.id}`}>
         <div className="relative aspect-2/3">
           <Image
             src={product.images[productTypes.color]}

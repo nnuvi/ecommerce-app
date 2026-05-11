@@ -1,6 +1,6 @@
 "use client";
 
-import { ShippingFormInputs } from "@types";
+import { ShippingFormInputs } from "@packages/types";
 import {
   PaymentElement,
   useStripe,

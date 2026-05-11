@@ -46,25 +46,26 @@
 // });
 
 import { Hono } from "hono";
-import stripe from "../utils/stripe.js";
+import stripe from "../libs/stripe.js";
 import { shouldBeUser } from "../middleware/authMiddleware.js";
-import type { CartItemsType } from "../types/cart.js";
-import { getStripeProductPrice } from "../utils/stripeProduct.js";
+import type { CartItemsType } from "@packages/types";
+
+import { getStripeProductPrice } from "../libs/stripeProduct.js";
 
 const sessionRoute = new Hono();
 
 sessionRoute.post("/create-checkout-session", shouldBeUser, async (c) => {
   const { cart }: { cart: CartItemsType } = await c.req.json();
   const userId = c.get("userId");
-  console.log('Here, Id: ', userId)
+  console.log("Here, Id: ", userId);
 
   try {
     // 1. Calculate the total order amount in cents
     // Stripe requires an integer (e.g., $10.50 must be 1050)
     let totalAmount = 0;
-    
+
     for (const item of cart) {
-    totalAmount += item.price * item.quantity; // use own data
+      totalAmount += item.price * item.quantity; // use own data
     }
 
     if (totalAmount <= 0) {
@@ -86,23 +87,30 @@ sessionRoute.post("/create-checkout-session", shouldBeUser, async (c) => {
       metadata: {
         userId: userId,
         // Optional: you can stringify your cart items if they are small
-        cart: JSON.stringify(cart.map(i => ({ id: i.id, quantity: i.quantity })))
+        cart: JSON.stringify(
+          cart.map((i) => ({ id: i.id, quantity: i.quantity })),
+        ),
       },
     });
 
-    console.log('Here, Payment intent secret key: ', paymentIntent.client_secret)
+    console.log(
+      "Here, Payment intent secret key: ",
+      paymentIntent.client_secret,
+    );
 
     // 3. Return the client_secret
     // Note: Use 'clientSecret' as the key to match your frontend logic
-    return c.json({ 
-      clientSecret: paymentIntent.client_secret 
+    return c.json({
+      clientSecret: paymentIntent.client_secret,
     });
-
   } catch (error: any) {
     console.error("Stripe PaymentIntent Error:", error);
-    return c.json({ 
-      error: error.message || "Internal Server Error" 
-    }, 500);
+    return c.json(
+      {
+        error: error.message || "Internal Server Error",
+      },
+      500,
+    );
   }
 });
 
@@ -112,7 +120,7 @@ sessionRoute.get("/:session_id", async (c) => {
     session_id as string,
     {
       expand: ["line_items"],
-    }
+    },
   );
 
   console.log(session);

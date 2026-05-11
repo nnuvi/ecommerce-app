@@ -4,18 +4,9 @@ import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 import { useAuth } from "@clerk/nextjs";
 import { useEffect, useState } from "react";
-import { CartItemsType, ShippingFormInputs } from "@types";
+import { CartItemsType, ShippingFormInputs } from "@packages/types";
 import CheckoutForm from "./CheckoutForm";
 import useCartStore from "../app/store/cartStore";
-// import { CheckoutProvider } from "@stripe/react-stripe-js";
-
-import {
-  EmbeddedCheckout,
-  EmbeddedCheckoutProvider,
-} from "@stripe/react-stripe-js";
-
-// import { fetchClientSecret } from '../app/actions/stripe'
-import { CheckoutProvider } from "@clerk/nextjs/experimental";
 
 const stripePromise = loadStripe(
   process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!,
@@ -57,10 +48,8 @@ const StripePaymentForm = ({
   useEffect(() => {
     if (token && cart.length > 0) {
       fetchClientSecret(cart, token).then((secret) => {
-        console.log("RAW SECRET:", secret); // ✅ correct
         setClientSecret(secret);
       });
-      console.log("Here, Payment intent secret key: ", clientSecret);
     }
   }, [cart, token]);
 
