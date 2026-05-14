@@ -31,7 +31,7 @@ export default async function OrdersPage() {
     <div className="mt-8 space-y-8">
       {/* PAGE HEADER */}
       <div>
-        <h1 className="text-3xl font-semibold text-cyan-800 text-center mb-4">Your Orders</h1>
+        <h1 className="text-3xl font-semibold text-stone-600 text-center mb-4">Your Orders</h1>
         <p className="text-gray-500 mt-1">
           View your purchase history and ordered products.
         </p>

@@ -24,7 +24,7 @@ export default function ReturnPage() {
 
           <Link
             href="/products"
-            className="mt-6 inline-flex items-center justify-center rounded-xl bg-black px-5 py-3 text-sm font-medium text-white hover:bg-gray-800 transition-colors"
+            className="mt-6 inline-flex items-center justify-center rounded-4xl bg-black px-5 py-3 text-sm font-medium text-white hover:bg-gray-800 transition-colors"
           >
             Continue Shopping
           </Link>
@@ -65,7 +65,7 @@ export default function ReturnPage() {
 
         {/* Payment Details */}
         <div className="p-6 sm:p-8 bg-stone-50">
-          <div className="rounded-2xl bg-white border border-gray-200 p-5">
+          <div className="rounded-lg bg-white border border-gray-200 p-5">
             <div className="flex items-start gap-3">
               <Receipt className="w-5 h-5 text-gray-500 mt-0.5 shrink-0" />
               <div className="min-w-0">
@@ -83,7 +83,7 @@ export default function ReturnPage() {
           <div className="mt-6 flex flex-col sm:flex-row gap-3">
             <Link
               href="/orders"
-              className="inline-flex flex-1 items-center justify-center gap-2 rounded-xl bg-black px-5 py-3 text-sm font-medium text-white hover:bg-gray-800 transition-colors"
+              className="inline-flex flex-1 items-center justify-center gap-2 rounded-4xl bg-black px-5 py-3 text-sm font-medium text-white hover:bg-gray-800 transition-colors"
             >
               See Your Orders
               <ArrowRight className="w-4 h-4" />
@@ -91,7 +91,7 @@ export default function ReturnPage() {
 
             <Link
               href="/products"
-              className="inline-flex flex-1 items-center justify-center rounded-xl border border-gray-300 bg-white px-5 py-3 text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors"
+              className="inline-flex flex-1 items-center justify-center rounded-4xl border border-gray-300 bg-white px-5 py-3 text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors"
             >
               Continue Shopping
             </Link>

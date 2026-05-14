@@ -38,7 +38,7 @@ const CartPage = () => {
   return (
     <div className="flex flex-col gap-8 items-center mt-12">
       {/**Title */}
-      <h1 className="text-2xl font-medium text-cyan-800">Your Shpping Cart</h1>
+      <h1 className="text-2xl font-medium text-stone-600">Your Shopping Cart</h1>
       {/**Steps */}
       <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-16">
         {steps.map((step) => (
