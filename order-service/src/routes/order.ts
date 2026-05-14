@@ -4,11 +4,11 @@ import { Order } from "../models/order.model.js";
 
 export const orderRoute = async (fastify: FastifyInstance) => {
   fastify.get(
-    "/user-order",
+    "/user-orders",
     { preHandler: shouldBeUser },
     async (request, reply) => {
-      const orders = await Order.findById({ userId: request.userId });
-      return reply.code(200).send(orders);
+      const orders = await Order.find({ userId: request.userId });
+      return reply.code(200).send({ orders });
     },
   );
 
@@ -17,7 +17,8 @@ export const orderRoute = async (fastify: FastifyInstance) => {
     { preHandler: shouldBeAdmin },
     async (request, reply) => {
       const orders = await Order.find();
-      return reply.code(200).send(orders);
+      console.log("Server - Fetched all orders:", orders);
+      return reply.code(200).send({ orders });
     },
   );
 };

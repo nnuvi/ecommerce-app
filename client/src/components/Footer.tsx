@@ -7,13 +7,14 @@ const Footer = () => {
       <div className="flex flex-col gap-4 items-center md:items-start">
         <Link href="/" className="flex items-center">
           <Image
-            src="/logo.png"
+            src="/lg9.png"
             alt="Ecom"
-            width={36}
-            height={36}
-            className="w-6 h-6 md:w-9 md:h-9"
+            width={1920}
+            height={720}
+            priority
+            className="h-6 w-auto md:h-9 lg:h-10 xl:h-11"
           />
-          <p className="text-md font-medium tracking-wider">ECom</p>
+          {/* <p className="text-md font-medium tracking-wider">ECom</p> */}
         </Link>
         <p className="text-sm text-gray-400">© 2026 Ecom</p>
         <p className="text-sm text-gray-400">All Rights Reserved</p>

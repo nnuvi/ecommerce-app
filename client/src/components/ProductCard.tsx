@@ -40,12 +40,16 @@ const ProductCard = ({ product }: { product: ProductType }) => {
   };
 
   return (
-    <div className="shadow-lg rounded-lg overflow-hidden bg-stone-50">
+    <div className="shadow-lg rounded-lg bg-stone-50">
       <Link href={`/products/${product.id}`}>
-        <div className="relative aspect-2/3">
+        <div className="relative aspect-2/3 overflow-hidden">
           <Image
             src={product.images[productTypes.color]}
             alt={product.name}
+            sizes="(max-width: 640px) 100vw,
+               (max-width: 768px) 50vw,
+               (max-width: 1280px) 33vw,
+               25vw"
             className="object-cover hover:scale-105 transition-all duration-300"
             fill
           />

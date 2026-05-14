@@ -57,8 +57,6 @@ const sessionRoute = new Hono();
 sessionRoute.post("/create-checkout-session", shouldBeUser, async (c) => {
   const { cart }: { cart: CartItemsType } = await c.req.json();
   const userId = c.get("userId");
-  console.log("Here, Id: ", userId);
-
   try {
     // 1. Calculate the total order amount in cents
     // Stripe requires an integer (e.g., $10.50 must be 1050)
@@ -79,27 +77,20 @@ sessionRoute.post("/create-checkout-session", shouldBeUser, async (c) => {
     const paymentIntent = await stripe.paymentIntents.create({
       amount: amountInCents,
       currency: "usd",
-      // Best practice for 2026: Let Stripe handle payment method logic
       automatic_payment_methods: {
         enabled: true,
       },
       // Pass metadata so you can identify the order in your webhooks
       metadata: {
         userId: userId,
-        // Optional: you can stringify your cart items if they are small
         cart: JSON.stringify(
           cart.map((i) => ({ id: i.id, quantity: i.quantity })),
         ),
       },
     });
-
-    console.log(
-      "Here, Payment intent secret key: ",
-      paymentIntent.client_secret,
-    );
+    console.log("Created PaymentIntent:", paymentIntent);
 
     // 3. Return the client_secret
-    // Note: Use 'clientSecret' as the key to match your frontend logic
     return c.json({
       clientSecret: paymentIntent.client_secret,
     });

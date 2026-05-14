@@ -13,7 +13,7 @@ export const shouldBeUser = async (
   reply: FastifyReply
 ) => {
   try {
-    const { userId } = getAuth(request)
+    const { userId } = getAuth(request);
 
     if (!userId) {
       return reply.status(401).send({ message: "You are not logged in." });

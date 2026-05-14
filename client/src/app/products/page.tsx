@@ -1,14 +1,27 @@
-"use client";
+import ProductList from "../../components/ProductList";
 
-import React, { useState, useEffect } from 'react';
-import Link from 'next/link';
-import Image from 'next/image';
-import { useRouter } from 'next/navigation';
-import { useSearchParams } from 'next/navigation';
+export default async function ProductsPage({
+  searchParams,
+}: {
+  searchParams: Promise<{
+    category?: string;
+    sort?: string;
+    search?: string;
+  }>;
+}) {
+  const { category, sort, search } = await searchParams;
 
-const page = () => {
   return (
-    <div>page Page</div>
+    console.log("ProductsPage searchParams:", { category, sort, search }),
+    (
+      <div>
+        <ProductList
+          category={category}
+          sort={sort}
+          search={search}
+          params="products"
+        />
+      </div>
+    )
   );
-};
-export default page;
+}

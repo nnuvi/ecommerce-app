@@ -2,34 +2,27 @@ import ProductInteraction from "./../../../components/ProductIteractions";
 import type { ProductType } from "@packages/types";
 import Image from "next/image";
 
-const product: ProductType = {
-  id: 1,
-  name: "Adidas CoreFit T-Shirt",
-  shortDescription:
-    "Lorem ipsum dolor sit amet consect adipisicing elit lorem ipsum dolor sit.",
-  description:
-    "Lorem ipsum dolor sit amet consect adipisicing elit lorem ipsum dolor sit. Lorem ipsum dolor sit amet consect adipisicing elit lorem ipsum dolor sit. Lorem ipsum dolor sit amet consect adipisicing elit lorem ipsum dolor sit.",
-  price: 59.9,
-  sizes: ["xs", "s", "m", "l", "xl"],
-  colors: ["gray", "purple", "green"],
-  images: {
-    gray: "/products/1g.png",
-    purple: "/products/1p.png",
-    green: "/products/1gr.png",
-  },
-  createdAt: new Date(),
-  updatedAt: new Date(),
-  categorySlug: "tshirts",
+const fetchProduct = async (id: string): Promise<ProductType> => {
+  console.log(`Fetch: Fetching product with ID: ${id}`);
+  const res = await fetch(`${process.env.NEXT_PUBLIC_PRODUCT_SERVICE_URL}/products/${id}`, {
+    cache: "no-store",
+  });
+  if (!res.ok) {
+    throw new Error("Failed to fetch product");
+  }
+  return res.json();
 };
 
 export const generateMetadata = async ({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>
 }) => {
+  console.log(`GenerateMetadata: Received params:`, await params);
+  const product = await fetchProduct((await params).id);
   return {
     title: product.name,
-    describe: product.description,
+    description: product.description,
   };
 };
 
@@ -37,10 +30,18 @@ const ProductPage = async ({
   params,
   searchParams,
 }: {
-  params: Promise<{ id: string }>;
+  params: Promise<{ id: string }>
   searchParams: Promise<{ color: string; size: string }>;
 }) => {
+  console.log(`Page: Received params:`, await params);
+  console.log(`Page: Received searchParams:`, await searchParams);
+
+  const product = await fetchProduct((await params).id);
   const { size, color } = await searchParams;
+
+  console.log(`Page: Fetched product:`, product);
+  console.log(`Page: Selected size:`, size);
+  console.log(`Page: Selected color:`, color);
 
   const selectedSize = size || (product.sizes[0] as string);
   const selectedColor = color || (product.colors[0] as string);

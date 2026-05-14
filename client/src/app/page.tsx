@@ -8,12 +8,13 @@ const Homepage = async ({
   searchParams: Promise<{ category: string }>;
 }) => {
   const category = (await searchParams).category;
+  console.log("Homepage searchParams:", { category });
   return (
     <div className="">
       <div className="relative aspect-3/1 mb-8">
         <Image src={"/featured1.png"} alt={"Featured Product"} fill></Image>
       </div>
-      <ProductList category={category} params={"products"} />
+      <ProductList category={category} params={"homepage"} />
     </div>
   );
 };

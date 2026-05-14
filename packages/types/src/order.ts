@@ -10,8 +10,9 @@ export type OrderProductType = {
 };
 
 export type OrderType = {
+  _id: string;
   userId: string;
-  email: string;
+  // email: string;
   amount: number;
   status: OrderStatusType;
   products: OrderProductType[];
@@ -19,4 +20,4 @@ export type OrderType = {
   updatedAt?: Date;
 };
 
-export type OrdersType = OrderType[]; 
+export type OrdersType = OrderType[];

@@ -43,10 +43,10 @@ const start = async () => {
   try {
     Promise.all([
       await connectDB(),
-      await producer.connect(),
-      await consumer.connect(),
+      // await producer.connect(),
+      // await consumer.connect(),
     ]);
-    await runKafkaSubscriptions();
+    // await runKafkaSubscriptions();
     await fastify.listen({ port: 8888 });
     console.log(`Order Service running on PORT:8888`);
   } catch (err) {

@@ -5,44 +5,50 @@ import { producer } from "./kafka.js";
 
 export const createOrder = async (orderData: OrderType) => {
   try {
-    console.log(`Libs: Creating order with data:`, orderData);
+    console.log("Creating order:", orderData);
+
+    const safeProducts = Array.isArray(orderData.products)
+      ? orderData.products
+      : [];
+
     const productItems = await Promise.all(
-      orderData.products.map(async (item) => {
+      safeProducts.map(async (item) => {
         const product = await getProductById(item.id);
-        console.log(`Libs: Fetched product for ID ${item.id}:`, product);
 
         return {
-          productId: item.id,
+          id: item.id, //chg
           name: product.name,
           price: product.price,
           quantity: item.quantity,
         };
-      })
+      }),
     );
 
-    const newOrder = new Order({
-      ...orderData,
+    const orderDoc = new Order({
+      userId: orderData.userId,
+      amount: orderData.amount,
+      status: orderData.status,
       products: productItems,
     });
 
-    const order = await newOrder.save();
+    console.log("Saving order...");
 
-    console.log(`Libs: Order created:`, order);
+    const order = await orderDoc.save();
 
-    console.log(`Libs: Sending order created message to Kafka:`, order);
-    await producer.send("order.created", {
+    producer.send("order.created", {
       value: {
         userId: order.userId,
-        email: order.email,
         amount: order.amount,
         status: order.status,
-        products: order.products,
+        products: productItems,
       },
     });
 
+    console.log("ORDER SAVED:", order._id);
+
     return order;
   } catch (error) {
-    console.log(error);
+    console.error("CREATE ORDER FAILED:", error);
     throw error;
   }
 };

@@ -30,7 +30,7 @@ export const createProduct = async (req: Request, res: Response) => {
 export const updateProduct = async (req: Request, res: Response) => {
   const { id } = req.params;
   const data: Prisma.ProductUpdateInput = req.body;
-   
+
   const updateProduct = await prisma.product.update({
     where: { id: Number(id) },
     data,
@@ -42,7 +42,7 @@ export const deleteProduct = async (req: Request, res: Response) => {
   const { id } = req.params;
 
   const updateProduct = await prisma.product.delete({
-    where: { id: Number(id) }
+    where: { id: Number(id) },
   });
 };
 
@@ -54,11 +54,15 @@ export const getProduct = async (req: Request, res: Response) => {
     where: { id: Number(id) },
   });
 
+  console.log(`Controller: Product with ID ${id}: `, product);
   return res.status(200).json(product);
 };
 
 export const getProducts = async (req: Request, res: Response) => {
   const { sort, category, search, limit } = req.query;
+  console.log(
+    `Controller: Received query params - sort: ${sort}, category: ${category}, search: ${search}, limit: ${limit}`,
+  );
 
   const orderBy = (() => {
     switch (sort) {
@@ -77,19 +81,26 @@ export const getProducts = async (req: Request, res: Response) => {
 
   const products = await prisma.product.findMany({
     where: {
-      category: {
-        slug: category as string ,
-      },
-      name: {
-        contains: search as string,
-        mode: "insensitive"
-      }
+      ...(category
+        ? {
+            category: {
+              slug: category as string,
+            },
+          }
+        : {}),
+
+      ...(search
+        ? {
+            name: {
+              contains: search as string,
+              mode: Prisma.QueryMode.insensitive,
+            },
+          }
+        : {}),
     },
     orderBy,
     take: limit ? Number(limit) : undefined,
   });
-  console.log(`Controller: Fetching products with category: ${category}, search: ${search}`);
-  res.status(200).json(products);
+  console.log(`Controller: Fetched ${products.length} products from database`);
+  return res.status(200).json({ products });
 };
-
-

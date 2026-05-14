@@ -2,6 +2,7 @@ import { Hono } from "hono";
 import Stripe from "stripe";
 import stripe from "../libs/stripe.js";
 import { producer } from "./../libs/kafka.js";
+import { shouldBeUser } from "../middleware/authMiddleware.js";
 
 const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET as string;
 const webhookRoute = new Hono();
@@ -24,6 +25,8 @@ webhookRoute.post("/stripe", async (c) => {
 
   try {
     event = stripe.webhooks.constructEvent(body, sig!, webhookSecret);
+    console.log("Webhook verified successfully!");
+    console.log("Received event:", event.type);
   } catch (error) {
     console.log("Webhook verification failed!");
     return c.json({ error: "Webhook verification failed!" }, 400);
@@ -33,9 +36,8 @@ webhookRoute.post("/stripe", async (c) => {
     case "payment_intent.succeeded":
       const paymentIntent = event.data.object as Stripe.PaymentIntent;
 
-      console.log("Payment succeeded:", paymentIntent.id);
-
       const metadata = paymentIntent.metadata;
+      console.log("Payment Intent Metadata:", metadata);
 
       const userId = metadata.userId;
       const cart = JSON.parse(metadata.cart || "[]");
@@ -46,11 +48,9 @@ webhookRoute.post("/stripe", async (c) => {
         status: paymentIntent.status,
         cart,
       });
-      // TODO: CREATE ORDER
       await producer.send("payment.successful", {
         value: {
           userId: paymentIntent.metadata.userId ?? "",
-          email: paymentIntent.metadata.email ?? "",
           amount: paymentIntent.amount,
           status: paymentIntent.status === "succeeded" ? "success" : "failed",
           products: JSON.parse(paymentIntent.metadata.cart || "[]"),
