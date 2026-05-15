@@ -9,7 +9,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-  DropdownMenuItem
+  DropdownMenuItem,
 } from "./ui/dropdown-menu";
 // import { DropdownMenuItem } from "./ui/avatar";
 import { Button } from "./ui/button";
@@ -17,9 +17,15 @@ import { useTheme } from "next-themes";
 import { SidebarTrigger, useSidebar } from "./ui/sidebar";
 import { Sheet, SheetContent, SheetTrigger } from "./ui/sheet";
 
+
+// import { UserButton } from "@clerk/nextjs";
+// import { ShoppingBag } from "lucide-react";
+// import { useRouter } from "next/navigation";
+
 const Navbar = () => {
   const { theme, setTheme } = useTheme();
   const { toggleSidebar } = useSidebar();
+  // const router = useRouter();
   return (
     <nav className="p-4 flex items-center justify-between sticky top-0 bg-background z-10">
       {/* LEFT */}
@@ -28,6 +34,18 @@ const Navbar = () => {
         Custom Button
       </Button> */}
       {/* RIGHT */}
+
+      {/* <div className="flex items-center gap-4">
+            <UserButton>
+              <UserButton.MenuItems>
+                <UserButton.Action
+                  label="See Orders"
+                  labelIcon={<ShoppingBag className="w-4 h-4"/>}
+                  onClick={() => router.push("/orders")}
+                ></UserButton.Action>
+              </UserButton.MenuItems>
+            </UserButton>
+      </div> */}
       <div className="flex items-center gap-4">
         <Link href="/">Dashboard</Link>
         {/* THEME MENU */}
@@ -42,9 +60,9 @@ const Navbar = () => {
           <DropdownMenuContent align="end">
             <DropdownMenuItem onClick={() => setTheme("light")}>
               <Sheet>
-  <SheetTrigger>Open</SheetTrigger>
-  <SheetContent>TEST</SheetContent>
-</Sheet>
+                <SheetTrigger>Open</SheetTrigger>
+                <SheetContent>TEST</SheetContent>
+              </Sheet>
               Light
             </DropdownMenuItem>
             <DropdownMenuItem onClick={() => setTheme("dark")}>
@@ -74,7 +92,7 @@ const Navbar = () => {
               <Settings className="h-[1.2rem] w-[1.2rem] mr-2" />
               Settings
             </DropdownMenuItem>
-            <DropdownMenuItem >
+            <DropdownMenuItem>
               <LogOut className="h-[1.2rem] w-[1.2rem] mr-2" />
               Logout
             </DropdownMenuItem>

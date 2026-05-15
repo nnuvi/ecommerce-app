@@ -15,44 +15,43 @@ import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown, MoreHorizontal } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-
-export type User = {
-  id: string;
-  avatar: string;
-  fullName: string;
-  email: string;
-  status: "active" | "inactive";
-};
+import type { User } from "@clerk/nextjs/server";
 
 export const columns: ColumnDef<User>[] = [
+  // SELECT
   {
     id: "select",
     header: ({ table }) => (
       <Checkbox
-        onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
         checked={
           table.getIsAllPageRowsSelected() ||
           (table.getIsSomePageRowsSelected() && "indeterminate")
+        }
+        onCheckedChange={(value) =>
+          table.toggleAllPageRowsSelected(!!value)
         }
       />
     ),
     cell: ({ row }) => (
       <Checkbox
-        onCheckedChange={(value) => row.toggleSelected(!!value)}
         checked={row.getIsSelected()}
+        onCheckedChange={(value) => row.toggleSelected(!!value)}
       />
     ),
   },
+
+  // AVATAR
   {
-    accessorKey: "avatar",
+    accessorKey: "imageUrl",
     header: "Avatar",
     cell: ({ row }) => {
       const user = row.original;
+
       return (
         <div className="w-9 h-9 relative">
           <Image
-            src={user.avatar}
-            alt={user.fullName}
+            src={user.imageUrl || "/default-avatar.png"}
+            alt={user.username || "user"}
             fill
             className="rounded-full object-cover"
           />
@@ -60,43 +59,65 @@ export const columns: ColumnDef<User>[] = [
       );
     },
   },
+
+  // USERNAME
   {
-    accessorKey: "fullName",
-    header: "User",
+    accessorKey: "username",
+    header: "Username",
   },
+
+  // FIRST NAME
+  {
+    accessorKey: "firstName",
+    header: "First Name",
+    cell: ({ row }) => row.original.firstName ?? "-",
+  },
+
+  // LAST NAME
+  {
+    accessorKey: "lastName",
+    header: "Last Name",
+    cell: ({ row }) => row.original.lastName ?? "-",
+  },
+
+  // EMAIL
   {
     accessorKey: "email",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Email
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
-      );
-    },
+    header: ({ column }) => (
+      <Button
+        variant="ghost"
+        onClick={() =>
+          column.toggleSorting(column.getIsSorted() === "asc")
+        }
+      >
+        Email
+        <ArrowUpDown className="ml-2 h-4 w-4" />
+      </Button>
+    ),
   },
+
+  // STATUS
   {
     accessorKey: "status",
     header: "Status",
     cell: ({ row }) => {
-      const status = row.getValue("status");
+      const status = row.getValue("status") as string;
 
       return (
         <div
           className={cn(
-            `p-1 rounded-md w-max text-xs`,
+            "p-1 rounded-md w-max text-xs",
             status === "active" && "bg-green-500/40",
-            status === "inactive" && "bg-red-500/40",
+            status === "inactive" && "bg-red-500/40"
           )}
         >
-          {status as string}
+          {status}
         </div>
       );
     },
   },
+
+  // ACTIONS
   {
     id: "actions",
     cell: ({ row }) => {
@@ -106,20 +127,27 @@ export const columns: ColumnDef<User>[] = [
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="ghost" className="h-8 w-8 p-0">
-              <span className="sr-only">Open menu</span>
               <MoreHorizontal className="h-4 w-4" />
             </Button>
           </DropdownMenuTrigger>
+
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
+
             <DropdownMenuItem
-              onClick={() => navigator.clipboard.writeText(user.id)}
+              onClick={() =>
+                navigator.clipboard.writeText(user.id)
+              }
             >
               Copy user ID
             </DropdownMenuItem>
+
             <DropdownMenuSeparator />
+
             <DropdownMenuItem>
-              <Link href={`/users/${user.id}`}>View customer</Link>
+              <Link href={`/users/${user.id}`}>
+                View Customer Details
+              </Link>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
