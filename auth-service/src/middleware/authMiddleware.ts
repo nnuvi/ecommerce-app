@@ -35,9 +35,6 @@ export const shouldBeAdmin = (
   const auth = getAuth(req);
   const userId = auth.userId;
 
-  console.log("Publishable Key:", process.env.CLERK_PUBLISHABLE_KEY);
-  console.log("Secret Key:", process.env.CLERK_SECRET_KEY ? "Loaded" : "Missing");
-
   if (!userId) {
     return res.status(401).json({ message: "You are not logged in!" });
   }

@@ -26,11 +26,6 @@ app.get("/health", (req: Request, res: Response) => {
   });
 });
 
-console.log("ENV CHECK:", {
-  pub: process.env.CLERK_PUBLISHABLE_KEY,
-  sec: process.env.CLERK_SECRET_KEY,
-});
-
 app.use("/users", shouldBeAdmin, userRoute);
 
 app.use((err: any, req: Request, res: Response, next: NextFunction) => {
