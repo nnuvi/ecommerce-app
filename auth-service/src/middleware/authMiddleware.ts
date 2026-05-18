@@ -34,6 +34,8 @@ export const shouldBeAdmin = (
 ) => {
   const auth = getAuth(req);
   const userId = auth.userId;
+  console.log("Auth session claims:", auth.sessionClaims);
+  console.log("Auth userId:", auth.userId);
 
   if (!userId) {
     return res.status(401).json({ message: "You are not logged in!" });

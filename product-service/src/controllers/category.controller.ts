@@ -14,8 +14,7 @@ export const createCategory = async (req: Request, res: Response) => {
 export const updateCategory = async (req: Request, res: Response) => {
   const { id } = req.params;
   const data: Prisma.CategoryUpdateInput = req.body;
-  console.log('Here: id ', id)
-  console.log('Here: body', data)
+  console.log('Here: body', id, data)
 
   const category = await prisma.category.update({
     where: { id: Number(id)},

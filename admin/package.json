@@ -9,10 +9,10 @@
     "lint": "eslint"
   },
   "dependencies": {
-    "@packages/kafka": "workspace:*",
-    "@packages/types": "workspace:*",
     "@clerk/nextjs": "^7.3.2",
     "@hookform/resolvers": "^5.2.2",
+    "@packages/kafka": "workspace:*",
+    "@packages/types": "workspace:*",
     "@radix-ui/react-avatar": "^1.1.11",
     "@radix-ui/react-checkbox": "^1.3.3",
     "@radix-ui/react-collapsible": "^1.1.12",
@@ -27,6 +27,7 @@
     "@radix-ui/react-separator": "^1.1.8",
     "@radix-ui/react-slot": "^1.2.4",
     "@radix-ui/react-tooltip": "^1.2.8",
+    "@tanstack/react-query": "^5.100.10",
     "@tanstack/react-table": "^8.21.3",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
@@ -38,6 +39,7 @@
     "react-day-picker": "^9.14.0",
     "react-dom": "^19.2.4",
     "react-hook-form": "^7.72.1",
+    "react-toastify": "^11.1.0",
     "recharts": "^3.8.1",
     "tailwind-merge": "^3.5.0",
     "zod": "^4.3.6"

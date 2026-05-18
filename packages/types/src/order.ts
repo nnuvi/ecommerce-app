@@ -21,3 +21,9 @@ export type OrderType = {
 };
 
 export type OrdersType = OrderType[];
+
+export type OrderChartType = {
+  month: string;
+  total: number;
+  successful: number;
+};

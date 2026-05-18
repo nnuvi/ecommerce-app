@@ -16,6 +16,11 @@ app.use(
   })
 );
 app.use(express.json());
+app.use((req, res, next) => {
+  console.log("Incoming:", req.method, req.url);
+  console.log("Authorization:", req.headers.authorization);
+  next();
+});
 app.use(clerkMiddleware());
 
 app.get("/health", (req: Request, res: Response) => {
@@ -29,7 +34,7 @@ app.get("/health", (req: Request, res: Response) => {
 app.use("/users", shouldBeAdmin, userRoute);
 
 app.use((err: any, req: Request, res: Response, next: NextFunction) => {
-  console.log(err);
+  console.log("err:", err);
   return res
     .status(err.status || 500)
     .json({ message: err.message || "Inter Server Error!" });

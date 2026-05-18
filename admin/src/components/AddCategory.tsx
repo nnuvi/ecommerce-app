@@ -6,7 +6,7 @@ import {
   SheetHeader,
   SheetTitle,
 } from "@/components/ui/sheet";
-import { useForm } from "react-hook-form";
+import { useForm, useFormState } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
@@ -20,22 +20,65 @@ import {
 } from "./ui/form";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
-
-const formSchema = z.object({
-  name: z.string().min(1, { message: "Name is Required!" }),
-});
+import { CategoryFormSchema } from "@packages/types";
+import { useAuth } from "@clerk/nextjs";
+import { useMutation } from "@tanstack/react-query";
+import { toast } from "react-toastify";
 
 const AddCategory = () => {
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const form = useForm({
+    resolver: zodResolver(CategoryFormSchema),
+    defaultValues: {
+      name: "",
+      slug: "",
+    },
   });
+
+  const { getToken } = useAuth();
+
+  const mutation = useMutation({
+    mutationFn: async (data: z.infer<typeof CategoryFormSchema>) => {
+      const token = await getToken();
+
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_PRODUCT_SERVICE_URL}/categories`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(data),
+        },
+      );
+      if (!res.ok) {
+        throw new Error("Failed to add category");
+      }
+    },
+
+    onSuccess: (data) => {
+      toast.success("Category added successfully!");
+      form.reset();
+    },
+
+    onError: (error: Error) => {
+      console.error("Mutation error:", error);
+      toast.error(error.message || "Failed to add category!");
+    },
+  });
+
   return (
     <SheetContent>
       <SheetHeader>
         <SheetTitle className="mb-4">Add Category</SheetTitle>
         <SheetDescription asChild>
           <Form {...form}>
-            <form className="space-y-8">
+            <form
+              className="space-y-8"
+              onSubmit={form.handleSubmit((data) => {
+                mutation.mutate(data);
+              })}
+            >
               <FormField
                 control={form.control}
                 name="name"
@@ -50,7 +93,27 @@ const AddCategory = () => {
                   </FormItem>
                 )}
               />
-              <Button type="submit">Submit</Button>
+              <FormField
+                control={form.control}
+                name="slug"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Slug</FormLabel>
+                    <FormControl>
+                      <Input {...field} />
+                    </FormControl>
+                    <FormDescription>Enter category slug.</FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <Button
+                type="submit"
+                disabled={mutation.isPending}
+                className="disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {mutation.isPending ? "Submitting..." : "Submit"}
+              </Button>
             </form>
           </Form>
         </SheetDescription>

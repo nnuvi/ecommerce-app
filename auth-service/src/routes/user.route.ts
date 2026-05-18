@@ -20,6 +20,7 @@ router.get("/:id", async (req, res) => {
 router.post("/", async (req, res) => {
   type CreateParams = Parameters<typeof clerk.users.createUser>[0];
   const newUser: CreateParams = req.body;
+  console.log("Creating user with data:", newUser);
   const user = await clerk.users.createUser(newUser);
   producer.send("user.created", {
     value: {
@@ -27,6 +28,7 @@ router.post("/", async (req, res) => {
       email: user.emailAddresses[0]?.emailAddress,
     },
   });
+  console.log("User created:", user); 
   res.status(200).json(user);
 });
 
