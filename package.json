@@ -11,7 +11,8 @@
 
     "dev:types": "pnpm --filter @packages/types dev",
     "dev:kafka": "pnpm --filter @packages/kafka dev",
-    "dev:packages": "pnpm --parallel --filter @packages/types --filter @packages/kafka dev",
+    "dev:logger": "pnpm --filter @packages/logger dev",
+    "dev:packages": "pnpm --parallel --filter @packages/types --filter @packages/kafka --filter @packages/logger dev",
 
     "dev:services": "pnpm --parallel dev:product dev:order dev:payment dev:auth",
     "dev:web": "pnpm --parallel dev:client dev:admin",

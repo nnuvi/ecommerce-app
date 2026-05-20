@@ -30,7 +30,7 @@ import { Button } from "./ui/button";
 import { UserFormSchema } from "@packages/types";
 import { useAuth } from "@clerk/nextjs";
 import { useMutation } from "@tanstack/react-query";
-import { toast } from "react-toastify";
+import { Bounce, toast } from "react-toastify";
 
 // const formSchema = z.object({
 //   fullName: z

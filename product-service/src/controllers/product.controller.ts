@@ -1,6 +1,8 @@
 import { Request, Response } from "express";
 import { Prisma } from "../../generated/prisma/client.js";
 import { prisma } from "../lib/prisma.js";
+import { log } from "node:console";
+import { logger } from "@packages/logger";
 
 export const createProduct = async (req: Request, res: Response) => {
   const data: Prisma.ProductCreateInput = req.body;
@@ -48,21 +50,16 @@ export const deleteProduct = async (req: Request, res: Response) => {
 
 export const getProduct = async (req: Request, res: Response) => {
   const { id } = req.params;
-  console.log(`Controller: Fetching product with ID: ${id}`);
 
   const product = await prisma.product.findUnique({
     where: { id: Number(id) },
   });
 
-  console.log(`Controller: Product with ID ${id}: `, product);
   return res.status(200).json(product);
 };
 
 export const getProducts = async (req: Request, res: Response) => {
   const { sort, category, search, limit } = req.query;
-  console.log(
-    `Controller: Received query params - sort: ${sort}, category: ${category}, search: ${search}, limit: ${limit}`,
-  );
 
   const orderBy = (() => {
     switch (sort) {
@@ -101,6 +98,6 @@ export const getProducts = async (req: Request, res: Response) => {
     orderBy,
     take: limit ? Number(limit) : undefined,
   });
-  console.log(`Controller: Fetched ${products.length} products from database`);
+
   return res.status(200).json({ products });
 };

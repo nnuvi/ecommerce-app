@@ -51,7 +51,6 @@ export const shouldBeAdmin = async (
     }
 
     req.userId = auth.userId;
-    console.log(`Admin access granted for user ID: ${req.userId}`);
     return next();
   } catch (error) {
     console.error(error);

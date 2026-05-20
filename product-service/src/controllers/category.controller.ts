@@ -3,8 +3,6 @@ import { Prisma } from '../../generated/prisma/client.js';
 import { prisma } from '../lib/prisma.js';
 
 export const createCategory = async (req: Request, res: Response) => {
-    console.log('Here: req.body', req.body)
-     
     const data: Prisma.CategoryCreateInput = req.body;
 
     const category = await prisma.category.create({ data });

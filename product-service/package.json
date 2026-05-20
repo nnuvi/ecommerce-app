@@ -10,6 +10,7 @@
   "dependencies": {
     "@packages/kafka": "workspace:*",
     "@packages/types": "workspace:*",
+    "@packages/logger": "workspace:*",
     "@clerk/express": "^2.1.5",
     "@prisma/adapter-pg": "^7.8.0",
     "@prisma/client": "^7.8.0",
