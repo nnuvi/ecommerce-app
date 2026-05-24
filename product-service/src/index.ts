@@ -5,7 +5,6 @@ import { clerkMiddleware, getAuth } from "@clerk/express";
 import { shouldBeUser } from "./middleware/authMiddleware.js";
 import productRouter from "./routes/product.route.js";
 import categoryRouter from "./routes/category.route.js";
-// import { logger } from "@packages/logger";
 import { logger, handleLogRequest } from "@packages/logger";
 
 dotenv.config();

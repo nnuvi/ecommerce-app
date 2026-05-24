@@ -11,6 +11,7 @@
     "@clerk/fastify": "^3.1.15",
     "@packages/kafka": "workspace:*",
     "@packages/types": "workspace:*",
+    "@packages/logger": "workspace:*",
     "date-fns": "^4.1.0",
     "dotenv": "^17.4.2",
     "fastify": "^5.8.5",

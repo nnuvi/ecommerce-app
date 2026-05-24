@@ -3,6 +3,9 @@ import Stripe from "stripe";
 import stripe from "../libs/stripe.js";
 import { producer } from "./../libs/kafka.js";
 import { shouldBeUser } from "../middleware/authMiddleware.js";
+import { logger } from "@packages/logger";
+import { email } from "zod";
+// import { getUser } from "../../../email-service/src/services/authClient.js";
 
 const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET as string;
 const webhookRoute = new Hono();
@@ -16,7 +19,7 @@ webhookRoute.get("/", (c) => {
 });
 
 webhookRoute.post("/stripe", async (c) => {
-  console.log("Webhook here");
+  logger.info({ message: "Webhook received" });
 
   const body = await c.req.text();
   const sig = c.req.header("stripe-signature");
@@ -25,10 +28,19 @@ webhookRoute.post("/stripe", async (c) => {
 
   try {
     event = stripe.webhooks.constructEvent(body, sig!, webhookSecret);
-    console.log("Webhook verified successfully!");
-    console.log("Received event:", event.type);
+    logger.info(
+      {
+        eventType: event.type,
+      },
+      "Received Stripe webhook event",
+    );
   } catch (error) {
-    console.log("Webhook verification failed!");
+    logger.error(
+      {
+        error,
+      },
+      "Webhook verification failed!",
+    );
     return c.json({ error: "Webhook verification failed!" }, 400);
   }
 
@@ -37,29 +49,43 @@ webhookRoute.post("/stripe", async (c) => {
       const paymentIntent = event.data.object as Stripe.PaymentIntent;
 
       const metadata = paymentIntent.metadata;
-      console.log("Payment Intent Metadata:", metadata);
-
-      const userId = metadata.userId;
       const cart = JSON.parse(metadata.cart || "[]");
 
-      console.log({
-        userId,
-        amount: paymentIntent.amount,
-        status: paymentIntent.status,
-        cart,
-      });
-      await producer.send("payment.successful", {
+      logger.info(
+        {
+          paymentObject: paymentIntent.object,
+          paymentEmail: paymentIntent.receipt_email,
+          paymentAmount: paymentIntent.amount, 
+          metadata,
+          cart
+        },
+        "Extracted metadata from payment intent",
+      );
+      const prod = await producer.send("payment.successful", {
         value: {
           userId: paymentIntent.metadata.userId ?? "",
+          email: paymentIntent.receipt_email ?? "",
           amount: paymentIntent.amount,
           status: paymentIntent.status === "succeeded" ? "success" : "failed",
           products: JSON.parse(paymentIntent.metadata.cart || "[]"),
         },
       });
+      logger.info(
+        {
+          producerResult: prod,
+        },
+        "Payment successful message sent to Kafka",
+      );
 
       break;
 
     default:
+      logger.warn(
+        {
+          eventType: event.type,
+        },
+        "Unhandled webhook event",
+      );
       break;
   }
   return c.json({ received: true });

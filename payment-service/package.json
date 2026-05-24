@@ -10,6 +10,7 @@
   "dependencies": {
     "@packages/kafka": "workspace:*",
     "@packages/types": "workspace:*",
+    "@packages/logger": "workspace:*",
     "@clerk/hono": "^0.1.22",
     "@hono/node-server": "^1.19.14",
     "dotenv": "^17.4.2",

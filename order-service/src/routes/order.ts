@@ -3,6 +3,7 @@ import { shouldBeAdmin, shouldBeUser } from "../middleware/authMiddleware.js";
 import { Order } from "../models/order.model.js";
 import { startOfMonth, subMonths } from "date-fns";
 import { OrderChartType } from "@packages/types";
+import { logger } from "@packages/logger";
 
 export const orderRoute = async (fastify: FastifyInstance) => {
   fastify.get(
@@ -10,6 +11,13 @@ export const orderRoute = async (fastify: FastifyInstance) => {
     { preHandler: shouldBeUser },
     async (request, reply) => {
       const orders = await Order.find({ userId: request.userId });
+      logger.info(
+        {
+          count: orders.length,
+          orders: orders.map((o) => o.products),
+        },
+        "Fetched user orders",
+      );
       return reply.code(200).send({ orders });
     },
   );
@@ -19,6 +27,12 @@ export const orderRoute = async (fastify: FastifyInstance) => {
     { preHandler: shouldBeAdmin },
     async (request, reply) => {
       const orders = await Order.find();
+      logger.info(
+        {
+          count: orders.length,
+        },
+        "Fetched all orders",
+      );
       return reply.code(200).send({ orders });
     },
   );
@@ -97,6 +111,12 @@ export const orderRoute = async (fastify: FastifyInstance) => {
         });
       }
 
+      logger.info(
+        {
+          count: results.length,
+        },
+        "Fetched order chart data",
+      );
       return reply.send(results);
     },
   );

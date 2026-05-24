@@ -1,24 +1,30 @@
+ import { log } from "node:console";
 import { consumer } from "./kafka.js";
 import { createOrder } from "./order.js";
+import { logger } from "@packages/logger";
 
 export const runKafkaSubscriptions = async () => {
-  console.log("Starting Kafka consumer subscription topic: payment.successful...");
+  logger.info({"message": "Starting Kafka consumer subscription topic: payment.successful"});
   consumer.subscribe([
     {
       topicName: "payment.successful",
       topicHandler: async (message) => {
         const order = message.value;
-        console.log(
-          `Kafka Subscription: Received payment successful message:`,
-          order,
+        logger.info(
+          {
+            order,
+          },
+          "Received payment successful message, creating order",
         );
-        await createOrder({
-          userId: order.userId,
-          amount: order.amount,
-          status: order.status,
-          products: order.products ?? [],
-        });
+        const createdOrder = await createOrder(order);
+        logger.info(
+          {
+            createdOrder,
+          },
+          "Order created successfully",
+        );
       },
     },
   ]);
 };
+ 

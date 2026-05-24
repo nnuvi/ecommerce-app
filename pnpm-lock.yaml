@@ -162,6 +162,9 @@ importers:
       '@packages/kafka':
         specifier: workspace:*
         version: link:../packages/kafka
+      '@packages/logger':
+        specifier: workspace:*
+        version: link:../packages/logger
       '@packages/types':
         specifier: workspace:*
         version: link:../packages/types
@@ -270,6 +273,40 @@ importers:
         specifier: ^5
         version: 5.9.3
 
+  email-service:
+    dependencies:
+      '@packages/kafka':
+        specifier: workspace:*
+        version: link:../packages/kafka
+      '@packages/logger':
+        specifier: workspace:*
+        version: link:../packages/logger
+      '@packages/types':
+        specifier: workspace:*
+        version: link:../packages/types
+      dotenv:
+        specifier: ^17.4.2
+        version: 17.4.2
+      nodemailer:
+        specifier: ^8.0.7
+        version: 8.0.7
+    devDependencies:
+      '@types/node':
+        specifier: ^25.6.0
+        version: 25.6.2
+      '@types/nodemailer':
+        specifier: ^8.0.0
+        version: 8.0.0
+      ts-node:
+        specifier: ^10.9.2
+        version: 10.9.2(@types/node@25.6.2)(typescript@6.0.3)
+      tsx:
+        specifier: ^4.21.0
+        version: 4.21.0
+      typescript:
+        specifier: ^6.0.3
+        version: 6.0.3
+
   order-service:
     dependencies:
       '@clerk/fastify':
@@ -278,6 +315,9 @@ importers:
       '@packages/kafka':
         specifier: workspace:*
         version: link:../packages/kafka
+      '@packages/logger':
+        specifier: workspace:*
+        version: link:../packages/logger
       '@packages/types':
         specifier: workspace:*
         version: link:../packages/types
@@ -359,6 +399,9 @@ importers:
       '@packages/kafka':
         specifier: workspace:*
         version: link:../packages/kafka
+      '@packages/logger':
+        specifier: workspace:*
+        version: link:../packages/logger
       '@packages/types':
         specifier: workspace:*
         version: link:../packages/types
@@ -1921,6 +1964,9 @@ packages:
 
   '@types/node@25.6.2':
     resolution: {integrity: sha512-sokuT28dxf9JT5Kady1fsXOvI4HVpjZa95NKT5y9PNTIrs2AsobR4GFAA90ZG8M+nxVRLysCXsVj6eGC7Vbrlw==}
+
+  '@types/nodemailer@8.0.0':
+    resolution: {integrity: sha512-fyf8jWULsCo0d0BuoQ75i6IeoHs47qcqxWc7yUdUcV0pOZGjUTTOvwdG1PRXUDqN/8A64yQdQdnA2pZgcdi+cA==}
 
   '@types/pg@8.20.0':
     resolution: {integrity: sha512-bEPFOaMAHTEP1EzpvHTbmwR8UsFyHSKsRisLIHVMXnpNefSbGA1bD6CVy+qKjGSqmZqNqBDV2azOBo8TgkcVow==}
@@ -3544,6 +3590,10 @@ packages:
 
   node-releases@2.0.38:
     resolution: {integrity: sha512-3qT/88Y3FbH/Kx4szpQQ4HzUbVrHPKTLVpVocKiLfoYvw9XSGOX2FmD2d6DrXbVYyAQTF2HeF6My8jmzx7/CRw==}
+
+  nodemailer@8.0.7:
+    resolution: {integrity: sha512-pkjE4mkBzQjdJT4/UmlKl3pX0rC9fZmjh7c6C9o7lv66Ac6w9WCnzPzhbPNxwZAzlF4mdq4CSWB5+FbK6FWCow==}
+    engines: {node: '>=6.0.0'}
 
   nodemon@3.1.14:
     resolution: {integrity: sha512-jakjZi93UtB3jHMWsXL68FXSAosbLfY0In5gtKq3niLSkrWznrVBzXFNOEMJUfc9+Ke7SHWoAZsiMkNP3vq6Jw==}
@@ -5930,6 +5980,10 @@ snapshots:
     dependencies:
       undici-types: 7.19.2
 
+  '@types/nodemailer@8.0.0':
+    dependencies:
+      '@types/node': 25.6.2
+
   '@types/pg@8.20.0':
     dependencies:
       '@types/node': 25.6.2
@@ -7770,6 +7824,8 @@ snapshots:
       semver: 6.3.1
 
   node-releases@2.0.38: {}
+
+  nodemailer@8.0.7: {}
 
   nodemon@3.1.14:
     dependencies:

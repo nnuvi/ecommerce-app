@@ -51,6 +51,8 @@ import { shouldBeUser } from "../middleware/authMiddleware.js";
 import type { CartItemsType } from "@packages/types";
 
 import { getStripeProductPrice } from "../libs/stripeProduct.js";
+import { meta } from "zod/v4/core";
+import { logger } from "@packages/logger";
 
 const sessionRoute = new Hono();
 
@@ -88,14 +90,31 @@ sessionRoute.post("/create-checkout-session", shouldBeUser, async (c) => {
         ),
       },
     });
-    console.log("Created PaymentIntent:", paymentIntent);
+    const parsedCart = JSON.parse(
+  paymentIntent.metadata.cart || "[]"
+);
+    logger.info(
+      {
+        paymentObject: paymentIntent.object,
+        paymentIntentId: paymentIntent.id,
+        paymentIntentAmount: paymentIntent.amount,
+        paymentIntentQuantity: parsedCart.length,
+        metadata: parsedCart.metadata,
+      },
+      "Created Stripe PaymentIntent",
+    );
 
     // 3. Return the client_secret
     return c.json({
       clientSecret: paymentIntent.client_secret,
     });
   } catch (error: any) {
-    console.error("Stripe PaymentIntent Error:", error);
+    logger.error(
+      {
+        error,
+      },
+      "Stripe PaymentIntent Error",
+    );
     return c.json(
       {
         error: error.message || "Internal Server Error",
@@ -114,7 +133,12 @@ sessionRoute.get("/:session_id", async (c) => {
     },
   );
 
-  console.log(session);
+  logger.info(
+    {
+      session,
+    },
+    "Retrieved Stripe Checkout Session",
+  );
 
   return c.json({
     status: session.status,

@@ -5,6 +5,7 @@ packages:
   - "order-service"
   - "payment-service"
   - "auth-service"
+  - "email-service"
   - "packages/*"
 allowBuilds:
   '@clerk/shared': true

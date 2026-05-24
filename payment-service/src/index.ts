@@ -11,6 +11,7 @@ import sessionRoute from "./routes/session.route.js";
 import webhookRoute from "./routes/webhooks.route.js";
 import { runKafkaSubscriptions } from "./libs/subscriptions.js";
 import { consumer, producer } from "./libs/kafka.js";
+import { logger } from "@packages/logger";
 
 dotenv.config();
 
@@ -65,13 +66,21 @@ const start = async () => {
         port: 8080,
       },
       (info) => {
-        console.log(
-          `Payment Service is running on http://localhost:${info.port}`,
+        logger.info(
+          {
+            port: info.port,
+          },
+          "Payment service is running",
         );
       },
     );
   } catch (error) {
-    console.log(error);
+    logger.error(
+      {
+        error,
+      },
+      "Failed to start Payment service",
+    );
     process.exit(1);
   }
 };

@@ -6,10 +6,11 @@ import { shouldBeUser } from "../src/middleware/authMiddleware.js";
 import { orderRoute } from "./routes/order.js";
 import { runKafkaSubscriptions } from "./libs/subscriptions.js";
 import { consumer, producer } from "./libs/kafka.js";
+import { logger } from "@packages/logger";
 
 dotenv.config({ debug: true });
 const fastify = Fastify({
-  logger: false ,
+  logger: false,
 });
 
 fastify.register(clerkPlugin, {
@@ -43,15 +44,14 @@ const start = async () => {
   try {
     Promise.all([
       await connectDB(),
-      // await producer.connect(),
-      // await consumer.connect(),
+      await producer.connect(),
+      await consumer.connect(),
     ]);
-    // await runKafkaSubscriptions();
+    await runKafkaSubscriptions();
     await fastify.listen({ port: 8888 });
-    console.log(`Order Service running on PORT:8888`);
+    logger.info({ port: 8888 }, "Order service is running");
   } catch (err) {
-    console.log(err);
-    fastify.log.error(err);
+    logger.error({ error: err }, "Error starting order service:");
     process.exit(1);
   }
 };

@@ -1,10 +1,10 @@
-import express, { NextFunction, Request, Response } from "express";
+import { clerkMiddleware } from "@clerk/express";
+import { logger } from "@packages/logger";
 import cors from "cors";
 import dotenv from "dotenv";
-import { clerkMiddleware } from "@clerk/express";
-import { shouldBeAdmin } from "./middleware/authMiddleware.js";
-import userRoute from "./routes/user.route.js";
+import express, { NextFunction, Request, Response } from "express";
 import { producer } from "./lib/kafka.js";
+import userRoute from "./routes/user.route.js";
 
 dotenv.config();
 
@@ -16,11 +16,6 @@ app.use(
   })
 );
 app.use(express.json());
-app.use((req, res, next) => {
-  console.log("Incoming:", req.method, req.url);
-  console.log("Authorization:", req.headers.authorization);
-  next();
-});
 app.use(clerkMiddleware());
 
 app.get("/health", (req: Request, res: Response) => {
@@ -31,10 +26,10 @@ app.get("/health", (req: Request, res: Response) => {
   });
 });
 
-app.use("/users", shouldBeAdmin, userRoute);
+app.use("/users", userRoute);
 
 app.use((err: any, req: Request, res: Response, next: NextFunction) => {
-  console.log("err:", err);
+  logger.error({ message: "Internal Server Error", error: err });
   return res
     .status(err.status || 500)
     .json({ message: err.message || "Inter Server Error!" });
@@ -42,12 +37,12 @@ app.use((err: any, req: Request, res: Response, next: NextFunction) => {
 
 const start = async () => {
   try {
-    // await producer.connect();
+    await producer.connect();
     app.listen(8000, () => {
-      console.log("Auth service is running on 8000");
+      logger.info({ message: "Auth Service is running on port 8000" });
     });
   } catch (error) {
-    console.log(error);
+    logger.error({ message: "Failed to start Auth Service", error });
     process.exit(1);
   }
 };

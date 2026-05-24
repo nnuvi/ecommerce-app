@@ -8,13 +8,14 @@
     "dev:order": "pnpm --filter order-service dev",
     "dev:payment": "pnpm --filter payment-service dev",
     "dev:auth": "pnpm --filter auth-service dev",
+    "dev:mail": "pnpm --filter email-service dev",
 
     "dev:types": "pnpm --filter @packages/types dev",
     "dev:kafka": "pnpm --filter @packages/kafka dev",
     "dev:logger": "pnpm --filter @packages/logger dev",
     "dev:packages": "pnpm --parallel --filter @packages/types --filter @packages/kafka --filter @packages/logger dev",
 
-    "dev:services": "pnpm --parallel dev:product dev:order dev:payment dev:auth",
+    "dev:services": "pnpm --parallel dev:product dev:order dev:payment dev:auth dev:mail",
     "dev:web": "pnpm --parallel dev:client dev:admin",
 
     "dev": "pnpm --parallel dev:packages dev:services dev:web"
@@ -28,6 +29,7 @@
     "product-service",
     "order-service",
     "payment-service",
+    "email-service",  
     "packages/*"
   ],
 

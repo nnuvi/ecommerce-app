@@ -1,29 +1,26 @@
 {
-  "name": "auth-service",
-  "type": "module",
+  "name": "email-service",
+  "version": "1.0.0",
+  "description": "",
   "main": "dist/index.js",
   "scripts": {
     "dev": "tsx watch src/index.ts",
     "build": "tsc",
     "start": "node dist/index.js"
   },
+  "type": "module",
   "dependencies": {
     "@packages/kafka": "workspace:*",
-    "@packages/types": "workspace:*",
     "@packages/logger": "workspace:*",
-    "@clerk/express": "^2.1.5",
-    "cors": "^2.8.6",
+    "@packages/types": "workspace:*",
     "dotenv": "^17.4.2",
-    "express": "^5.2.1"
+    "nodemailer": "^8.0.7"
   },
   "devDependencies": {
-    "@types/cors": "^2.8.19",
-    "@types/express": "^5.0.6",
     "@types/node": "^25.6.0",
-    "nodemon": "^3.1.14",
+    "@types/nodemailer": "^8.0.0",
     "ts-node": "^10.9.2",
     "tsx": "^4.21.0",
     "typescript": "^6.0.3"
-  },
-  "debug": true
+  }
 }
