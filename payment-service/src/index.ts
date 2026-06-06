@@ -20,7 +20,11 @@ const app = new Hono();
 app.use(
   "*",
   cors({
-    origin: ["http://localhost:3000", "http://localhost:3003"],
+    origin: [
+      "http://localhost:3000",
+      "http://localhost:3003",
+      "ecom-client-jcx0p90hm-nvs-projects-fe2a451b.vercel.app",
+    ],
     allowMethods: ["POST", "GET", "OPTIONS"],
     allowHeaders: ["Content-Type", "Authorization"],
     exposeHeaders: ["Content-Length"],
@@ -63,7 +67,9 @@ const start = async () => {
       // await runKafkaSubscriptions();
       logger.info({ message: "Starting Payment Service in development mode" });
     } else {
-      logger.info({ message: "Starting Payment Service in production mode..." });
+      logger.info({
+        message: "Starting Payment Service in production mode...",
+      });
     }
     serve(
       {

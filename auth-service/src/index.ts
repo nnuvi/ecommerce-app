@@ -11,9 +11,13 @@ dotenv.config();
 const app = express();
 app.use(
   cors({
-    origin: ["http://localhost:3000"],
+    origin: [
+      "http://localhost:3000",
+      "http://localhost:3003",
+      "ecom-client-jcx0p90hm-nvs-projects-fe2a451b.vercel.app",
+    ],
     credentials: true,
-  })
+  }),
 );
 app.use(express.json());
 app.use(clerkMiddleware());

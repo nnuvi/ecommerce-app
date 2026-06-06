@@ -13,7 +13,11 @@ const app = express();
 
 app.use(
   cors({
-    origin: ["http://localhost:3000", "http://localhost:3003"],
+    origin: [
+      "http://localhost:3000",
+      "http://localhost:3003",
+      "ecom-client-jcx0p90hm-nvs-projects-fe2a451b.vercel.app",
+    ],
     credentials: true,
   }),
 );
