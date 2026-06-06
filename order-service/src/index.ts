@@ -49,7 +49,7 @@ const start = async () => {
       logger.info({ message: "Starting order service in development mode" });
     }
     await fastify.listen({
-      port: PORT,
+      port: 8888,
       host: "0.0.0.0",
     });
     logger.info({ port: 8888 }, "Order service is running");
