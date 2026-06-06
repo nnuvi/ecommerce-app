@@ -48,7 +48,10 @@ const start = async () => {
       // await runKafkaSubscriptions();
       logger.info({ message: "Starting order service in development mode" });
     }
-    await fastify.listen({ port: 8888 });
+    await fastify.listen({
+      port: PORT,
+      host: "0.0.0.0",
+    });
     logger.info({ port: 8888 }, "Order service is running");
   } catch (err) {
     logger.error({ error: err }, "Error starting order service:");
