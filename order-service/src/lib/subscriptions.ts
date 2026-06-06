@@ -10,12 +10,6 @@ export const runKafkaSubscriptions = async () => {
       topicName: "payment.successful",
       topicHandler: async (message) => {
         const order = message.value;
-        logger.info(
-          {
-            order,
-          },
-          "Received payment successful message, creating order",
-        );
         const createdOrder = await createOrder(order);
         logger.info(
           {

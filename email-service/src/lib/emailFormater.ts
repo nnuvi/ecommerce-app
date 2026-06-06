@@ -1,3 +1,9 @@
+const formatCurrency = (amount: number) =>
+  new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+  }).format(amount / 100);
+
 export const orderEmail = (order: {
   orderId: string;
   amount: number;
@@ -10,16 +16,10 @@ export const orderEmail = (order: {
   }[];
 }) => {
   const productList = order.products
-    .map(
-      (p) =>
-        `- ${p.name} (x${p.quantity}) = $${p.price * p.quantity}`
-    )
+    .map((p) => `- ${p.name} (x${p.quantity}) = $${p.price * p.quantity}`)
     .join("\n");
 
-  const totalItems = order.products.reduce(
-    (sum, p) => sum + p.quantity,
-    0
-  );
+  const totalItems = order.products.reduce((sum, p) => sum + p.quantity, 0);
 
   return `
 🧾 Order Confirmation
@@ -27,7 +27,7 @@ export const orderEmail = (order: {
 Order ID: ${order.orderId}
 Status: ${order.status}
 Total Items: ${totalItems}
-Total Amount: $${order.amount}
+Total Amount: ${formatCurrency(order.amount)}
 
 📦 Products:
 ${productList}
@@ -44,9 +44,9 @@ export const orderEmailHTML = (order: any) => {
 
       <h2 style="margin-bottom:20px;">🧾 Order Confirmation</h2>
 
-      <p><b>Order ID:</b> ${order.orderId}</p>
+      <p><b>Order ID:</b> ${order.orderId || order._id}</p>
       <p><b>Status:</b> ${order.status}</p>
-      <p><b>Total:</b> $${order.amount}</p>
+      <p><b>Total:</b> ${formatCurrency(order.amount)}</p>
 
       <hr style="margin:20px 0;" />
 
@@ -70,7 +70,7 @@ export const orderEmailHTML = (order: any) => {
                 <td>${p.quantity}</td>
                 <td>$${p.price * p.quantity}</td>
               </tr>
-            `
+            `,
             )
             .join("")}
         </tbody>
@@ -79,7 +79,7 @@ export const orderEmailHTML = (order: any) => {
       <hr style="margin:20px 0;" />
 
       <p style="text-align:center;color:#666;">
-        Thank you for shopping with us ❤️
+        Thank you for shopping with us.
       </p>
 
     </div>

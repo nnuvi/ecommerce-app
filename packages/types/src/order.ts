@@ -10,7 +10,7 @@ export type OrderProductType = {
 };
 
 export type OrderType = {
-  _id: string;
+  _id?: string;
   userId: string;
   email: string;
   amount: number;

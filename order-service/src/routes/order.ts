@@ -2,8 +2,9 @@ import type { FastifyInstance } from "fastify";
 import { shouldBeAdmin, shouldBeUser } from "../middleware/authMiddleware.js";
 import { Order } from "../models/order.model.js";
 import { startOfMonth, subMonths } from "date-fns";
-import { OrderChartType } from "@packages/types";
+import { OrderChartType, OrderType } from "@packages/types";
 import { logger } from "@packages/logger";
+import { createOrder } from "../lib/order.js";
 
 export const orderRoute = async (fastify: FastifyInstance) => {
   fastify.get(
@@ -26,7 +27,8 @@ export const orderRoute = async (fastify: FastifyInstance) => {
     "/orders",
     { preHandler: shouldBeAdmin },
     async (request, reply) => {
-      const orders = await Order.find();
+      const { limit } = request.query as { limit?: string };
+      const orders = await Order.find().limit(limit ? parseInt(limit) : 5);
       logger.info(
         {
           count: orders.length,
@@ -120,4 +122,25 @@ export const orderRoute = async (fastify: FastifyInstance) => {
       return reply.send(results);
     },
   );
+
+  fastify.post(
+    "/save-orders",
+    // { preHandler: shouldBeUser },
+    async (request, reply) => {
+      const order = request.body as OrderType;
+      const apiKey = request.headers["x-internal-api-key"];
+      if (apiKey !== process.env.INTERNAL_API_KEY) {
+        return reply.code(401).send({ error: "Unauthorized" });
+      }
+      const createdOrder = await createOrder(order);
+      logger.info(
+        {
+          order: createdOrder,
+        },
+        "Created new order",
+      );
+      return reply.code(200).send({ createdOrder });
+    },
+  );
 };
+

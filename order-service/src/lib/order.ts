@@ -1,8 +1,9 @@
 import { Order } from "../models/order.model.js";
 import type { OrderType } from "@packages/types";
-import { getProductById } from "../clients/product.client.js";
+import { getProductById } from "../services/product.service.js";
 import { producer } from "./kafka.js";
 import { logger } from "@packages/logger";
+import { sendOrderConfirmationEmail } from "../services/email.service.js";
 
 export const createOrder = async (orderData: OrderType) => {
   try {
@@ -33,10 +34,11 @@ export const createOrder = async (orderData: OrderType) => {
       }),
     );
 
-    logger.info({
-      productItems,
-    },
-    "Fetched product details for order",
+    logger.info(
+      {
+        productItems,
+      },
+      "Fetched product details for order",
     );
 
     const orderDoc = new Order({
@@ -56,16 +58,27 @@ export const createOrder = async (orderData: OrderType) => {
 
     const order = await orderDoc.save();
 
-    producer.send("order.created", {
-      value: {
-        orderId: order._id.toString(),
+    if (process.env.NODE_ENV === "development") {
+      producer.send("order.created", {
+        value: {
+          orderId: order._id.toString(),
+          userId: order.userId,
+          email: order.email,
+          amount: order.amount,
+          status: order.status,
+          products: productItems,
+        },
+      });
+    } else {
+      await sendOrderConfirmationEmail({
+        _id: order._id.toString(),
         userId: order.userId,
         email: order.email,
         amount: order.amount,
         status: order.status,
         products: productItems,
-      },
-    });
+      });
+    }
 
     logger.info(
       {
@@ -77,7 +90,7 @@ export const createOrder = async (orderData: OrderType) => {
       },
       "ORDER SAVED",
     );
- 
+
     return order;
   } catch (error) {
     logger.error({ error }, "CREATE ORDER FAILED:");

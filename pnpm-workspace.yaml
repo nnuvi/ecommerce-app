@@ -1,11 +1,7 @@
 packages:
   - "client"
   - "admin"
-  - "product-service"
-  - "order-service"
-  - "payment-service"
-  - "auth-service"
-  - "email-service"
+  - "*-service"
   - "packages/*"
 allowBuilds:
   '@clerk/shared': true

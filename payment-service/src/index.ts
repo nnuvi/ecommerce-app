@@ -9,8 +9,8 @@ import Stripe from "stripe";
 import { cors } from "hono/cors";
 import sessionRoute from "./routes/session.route.js";
 import webhookRoute from "./routes/webhooks.route.js";
-import { runKafkaSubscriptions } from "./libs/subscriptions.js";
-import { consumer, producer } from "./libs/kafka.js";
+import { runKafkaSubscriptions } from "./lib/subscriptions.js";
+import { consumer, producer } from "./lib/kafka.js";
 import { logger } from "@packages/logger";
 
 dotenv.config();
@@ -21,9 +21,9 @@ app.use(
   "*",
   cors({
     origin: ["http://localhost:3000", "http://localhost:3003"],
-    allowMethods: ['POST', 'GET', 'OPTIONS'],
-    allowHeaders: ['Content-Type', 'Authorization'],
-    exposeHeaders: ['Content-Length'],
+    allowMethods: ["POST", "GET", "OPTIONS"],
+    allowHeaders: ["Content-Type", "Authorization"],
+    exposeHeaders: ["Content-Length"],
     maxAge: 600,
     credentials: true,
   }),
@@ -58,8 +58,13 @@ app.route("/webhooks", webhookRoute);
 
 const start = async () => {
   try {
-    Promise.all([await producer.connect(), await consumer.connect()]);
-    await runKafkaSubscriptions();
+    if (process.env.NODE_ENV === "development") {
+      await Promise.all([producer.connect(), consumer.connect()]);
+      await runKafkaSubscriptions();
+      logger.info({ message: "Kafka subscriptions started" });
+    } else {
+      logger.info({ message: "Starting Payment Service in production mode..." });
+    }
     serve(
       {
         fetch: app.fetch,

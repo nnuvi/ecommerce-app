@@ -3,6 +3,7 @@ import { Card, CardContent, CardFooter, CardTitle } from "./ui/card";
 import { Badge } from "./ui/badge";
 import { OrderType, ProductType } from "@packages/types";
 import { auth } from "@clerk/nextjs/server";
+import { logger } from "@packages/logger";
 
 const CardList = async ({ title }: { title: string }) => {
   let products: ProductType[] = [];
@@ -26,6 +27,13 @@ const CardList = async ({ title }: { title: string }) => {
       },
     ).then((res) => res.json());
     orders = result.orders || [];
+    console.log("Fetched orders:", orders);
+    logger.info(
+      {
+        orders,
+      },
+      "Fetched recent orders for admin dashboard",
+    );
   }
 
   return (

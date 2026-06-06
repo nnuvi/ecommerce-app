@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { ShieldX, ArrowLeft, Lock } from "lucide-react";
+import SignInAgainButton from "@/components/SignInAgainButton";
 
 export default function UnauthorizedPage() {
   return (
@@ -41,13 +42,7 @@ export default function UnauthorizedPage() {
             Go to Dashboard
           </Link>
 
-          <Link
-            href="/sign-in"
-            className="flex-1 inline-flex items-center justify-center gap-2 rounded-4xl border border-stone-300 bg-white px-5 py-3 text-sm font-medium text-stone-700 hover:bg-stone-50 transition-colors"
-          >
-            <ArrowLeft className="h-4 w-4" />
-            Sign In Again
-          </Link>
+          <SignInAgainButton />
         </div>
 
         {/* Footer */}

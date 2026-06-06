@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { CheckCircle, XCircle, Receipt, ArrowRight } from "lucide-react";
+import useCartStore from "../store/cartStore";
 
 export default function ReturnPage() {
   const searchParams = useSearchParams();
@@ -34,7 +35,9 @@ export default function ReturnPage() {
   }
 
   const isSuccess = status === "succeeded";
-
+  if (isSuccess && paymentIntent) {
+    useCartStore.getState().clearCart();
+  }
   return (
     <div className="min-h-[70vh] flex items-center justify-center px-4 py-8">
       <div className="max-w-2xl w-full rounded-3xl border border-gray-200 bg-white shadow-sm overflow-hidden">

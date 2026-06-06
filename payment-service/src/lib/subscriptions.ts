@@ -1,4 +1,4 @@
-import { consumer } from "./../libs/kafka.js";
+import { consumer } from "./kafka.js";
 import { createStripeProduct, deleteStripeProduct } from "./stripeProduct.js";
 
 export const runKafkaSubscriptions = async () => {

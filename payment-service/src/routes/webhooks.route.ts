@@ -1,10 +1,11 @@
 import { Hono } from "hono";
 import Stripe from "stripe";
-import stripe from "../libs/stripe.js";
-import { producer } from "./../libs/kafka.js";
+import stripe from "../lib/stripe.js";
+import { producer } from "../lib/kafka.js";
 import { shouldBeUser } from "../middleware/authMiddleware.js";
 import { logger } from "@packages/logger";
 import { email } from "zod";
+import { createOrderInOrderService } from "../services/order.service.js";
 // import { getUser } from "../../../email-service/src/services/authClient.js";
 
 const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET as string;
@@ -55,28 +56,37 @@ webhookRoute.post("/stripe", async (c) => {
         {
           paymentObject: paymentIntent.object,
           paymentEmail: paymentIntent.receipt_email,
-          paymentAmount: paymentIntent.amount, 
+          paymentAmount: paymentIntent.amount,
           metadata,
-          cart
+          cart,
         },
         "Extracted metadata from payment intent",
       );
-      const prod = await producer.send("payment.successful", {
-        value: {
+      if (process.env.NODE_ENV === "development") {
+        const prod = await producer.send("payment.successful", {
+          value: {
+            userId: paymentIntent.metadata.userId ?? "",
+            email: paymentIntent.receipt_email ?? "",
+            amount: paymentIntent.amount,
+            status: paymentIntent.status === "succeeded" ? "success" : "failed",
+            products: JSON.parse(paymentIntent.metadata.cart || "[]"),
+          },
+        });
+        logger.info(
+          {
+            producerResult: prod,
+          },
+          "Payment successful message sent to Kafka",
+        );
+      } else {
+        await createOrderInOrderService({
           userId: paymentIntent.metadata.userId ?? "",
           email: paymentIntent.receipt_email ?? "",
           amount: paymentIntent.amount,
           status: paymentIntent.status === "succeeded" ? "success" : "failed",
           products: JSON.parse(paymentIntent.metadata.cart || "[]"),
-        },
-      });
-      logger.info(
-        {
-          producerResult: prod,
-        },
-        "Payment successful message sent to Kafka",
-      );
-
+        });
+      }
       break;
 
     default:

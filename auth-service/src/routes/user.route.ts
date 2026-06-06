@@ -16,7 +16,10 @@ router.get("/me", async (req: Request, res: Response) => {
     return res.status(401).json({ message: "Unauthorized" });
   }
   const user = await clerk.users.getUser(userId);
-  logger.info({ message: "Current user fetched successfully", username: user.username });
+  logger.info({
+    message: "Current user fetched successfully",
+    username: user.username,
+  });
   res.status(200).json(user);
 });
 
@@ -25,36 +28,59 @@ router.get("/", shouldBeAdmin, async (req: Request, res: Response) => {
   res.status(200).json(users);
 });
 
-router.get("/:id", shouldBeAdmin, async (req: Request<{ id: string }>, res: Response) => {
-  const { id } = req.params;
-  const user = await clerk.users.getUser(id);
-  res.status(200).json(user);
-});
+router.get(
+  "/:id",
+  shouldBeAdmin,
+  async (req: Request<{ id: string }>, res: Response) => {
+    const { id } = req.params;
+    const user = await clerk.users.getUser(id);
+    res.status(200).json(user);
+  },
+);
 
 router.post("/", shouldBeAdmin, async (req: Request, res: Response) => {
   type CreateParams = Parameters<typeof clerk.users.createUser>[0];
   const newUser: CreateParams = req.body;
   const user = await clerk.users.createUser(newUser);
 
-  producer.send("user.created", {
-    value: {
+  if (process.env.NODE_ENV === "development") {
+    producer.send("user.created", {
+      value: {
+        username: user.username,
+        email: user.emailAddresses[0]?.emailAddress,
+        firstName: user.firstName,
+      },
+    });
+  } else {
+    sendUserCreatedEmail({
       username: user.username,
       email: user.emailAddresses[0]?.emailAddress,
       firstName: user.firstName,
-    },
-  });
+    });
+  }
 
   logger.info({
     message: "User created and event sent to Kafka",
-    username: user.username
+    username: user.username,
   });
   res.status(200).json(user);
 });
 
-router.delete("/:id", shouldBeAdmin, async (req: Request<{ id: string }>, res: Response) => {
-  const { id } = req.params;
-  const user = await clerk.users.deleteUser(id);
-  res.status(200).json(user);
-});
+router.delete(
+  "/:id",
+  shouldBeAdmin,
+  async (req: Request<{ id: string }>, res: Response) => {
+    const { id } = req.params;
+    const user = await clerk.users.deleteUser(id);
+    res.status(200).json(user);
+  },
+);
 
 export default router;
+function sendUserCreatedEmail(arg0: {
+  username: string | null;
+  email: string;
+  firstName: string | null;
+}) {
+  throw new Error("Function not implemented.");
+}

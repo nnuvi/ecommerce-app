@@ -37,7 +37,12 @@ app.use((err: any, req: Request, res: Response, next: NextFunction) => {
 
 const start = async () => {
   try {
-    await producer.connect();
+    if (process.env.NODE_ENV === "development") {
+      logger.debug({ message: "Starting Auth Service in development mode..." });
+      await producer.connect();
+    } else {
+      logger.info({ message: "Starting Auth Service in production mode..." });
+    }
     app.listen(8000, () => {
       logger.info({ message: "Auth Service is running on port 8000" });
     });

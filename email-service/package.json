@@ -10,10 +10,12 @@
   },
   "type": "module",
   "dependencies": {
+    "@hono/node-server": "^1.19.14",
     "@packages/kafka": "workspace:*",
     "@packages/logger": "workspace:*",
     "@packages/types": "workspace:*",
     "dotenv": "^17.4.2",
+    "hono": "^4.12.18",
     "nodemailer": "^8.0.7"
   },
   "devDependencies": {
