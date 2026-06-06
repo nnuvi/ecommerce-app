@@ -2,7 +2,7 @@ import { serve } from '@hono/node-server';
 import { Hono } from 'hono';
 import "dotenv/config";
 import { logger } from "@packages/logger";
-import { createConsumer, createKafkaClient } from "@packages/kafka";
+// import { createConsumer, createKafkaClient } from "@packages/kafka";
 import { sendEmail } from "./lib/mailer.js";
 import { getUser } from "./services/authClient.js";
 import { orderEmailHTML } from "./lib/emailFormater.js";
