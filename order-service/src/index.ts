@@ -4,8 +4,8 @@ import connectDB from "./config/db.js";
 import { clerkClient, clerkPlugin, getAuth } from "@clerk/fastify";
 import { shouldBeUser } from "../src/middleware/authMiddleware.js";
 import { orderRoute } from "./routes/order.js";
-import { runKafkaSubscriptions } from "./lib/subscriptions.js";
-import { consumer, producer } from "./lib/kafka.js";
+// import { runKafkaSubscriptions } from "./lib/subscriptions.js";
+// import { consumer, producer } from "./lib/kafka.js";
 import { logger } from "@packages/logger";
 
 dotenv.config({ debug: true });
@@ -44,9 +44,9 @@ const start = async () => {
   try {
     await connectDB();
     if (process.env.NODE_ENV === "development") {
-      await Promise.all([producer.connect(), consumer.connect()]);
-      await runKafkaSubscriptions();
-      logger.info({ message: "Kafka subscriptions started" });
+      // await Promise.all([producer.connect(), consumer.connect()]);
+      // await runKafkaSubscriptions();
+      logger.info({ message: "Starting order service in development mode" });
     }
     await fastify.listen({ port: 8888 });
     logger.info({ port: 8888 }, "Order service is running");
