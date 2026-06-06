@@ -3,7 +3,7 @@ import { logger } from "@packages/logger";
 import cors from "cors";
 import dotenv from "dotenv";
 import express, { NextFunction, Request, Response } from "express";
-import { producer } from "./lib/kafka.js";
+// import { producer } from "./lib/kafka.js";
 import userRoute from "./routes/user.route.js";
 
 dotenv.config();
@@ -39,7 +39,7 @@ const start = async () => {
   try {
     if (process.env.NODE_ENV === "development") {
       logger.debug({ message: "Starting Auth Service in development mode..." });
-      await producer.connect();
+      // await producer.connect();
     } else {
       logger.info({ message: "Starting Auth Service in production mode..." });
     }

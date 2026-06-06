@@ -1,6 +1,6 @@
 import { Router, Request, Response } from "express";
 import { getClerkClient } from "../lib/clerk.js";
-import { producer } from "../lib/kafka.js";
+// import { producer } from "../lib/kafka.js";
 import { clerkClient } from "@clerk/express";
 import { getAuth } from "@clerk/express";
 import { logger } from "@packages/logger";
@@ -44,13 +44,17 @@ router.post("/", shouldBeAdmin, async (req: Request, res: Response) => {
   const user = await clerk.users.createUser(newUser);
 
   if (process.env.NODE_ENV === "development") {
-    producer.send("user.created", {
-      value: {
-        username: user.username,
-        email: user.emailAddresses[0]?.emailAddress,
-        firstName: user.firstName,
-      },
+    logger.debug({
+      message: "User created in development mode, skipping Kafka event",
+      username: user.username,
     });
+    // producer.send("user.created", {
+    //   value: {
+    //     username: user.username,
+    //     email: user.emailAddresses[0]?.emailAddress,
+    //     firstName: user.firstName,
+    //   },
+    // });
   } else {
     sendUserCreatedEmail({
       username: user.username,
