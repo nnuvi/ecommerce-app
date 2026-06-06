@@ -1,7 +1,7 @@
-import { createKafkaClient, createConsumer, createProducer } from "@packages/kafka";
+// import { createKafkaClient, createConsumer, createProducer } from "@packages/kafka";
 
 
-const kafkaClient = createKafkaClient("payment-service");
+// const kafkaClient = createKafkaClient("payment-service");
 
-export const producer = createProducer(kafkaClient);
-export const consumer = createConsumer(kafkaClient, "payment-group");
+// export const producer = createProducer(kafkaClient);
+// export const consumer = createConsumer(kafkaClient, "payment-group");

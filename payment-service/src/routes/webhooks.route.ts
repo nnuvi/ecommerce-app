@@ -1,7 +1,7 @@
 import { Hono } from "hono";
 import Stripe from "stripe";
 import stripe from "../lib/stripe.js";
-import { producer } from "../lib/kafka.js";
+// import { producer } from "../lib/kafka.js";
 import { shouldBeUser } from "../middleware/authMiddleware.js";
 import { logger } from "@packages/logger";
 import { email } from "zod";
@@ -63,21 +63,19 @@ webhookRoute.post("/stripe", async (c) => {
         "Extracted metadata from payment intent",
       );
       if (process.env.NODE_ENV === "development") {
-        const prod = await producer.send("payment.successful", {
-          value: {
-            userId: paymentIntent.metadata.userId ?? "",
-            email: paymentIntent.receipt_email ?? "",
-            amount: paymentIntent.amount,
-            status: paymentIntent.status === "succeeded" ? "success" : "failed",
-            products: JSON.parse(paymentIntent.metadata.cart || "[]"),
-          },
+        // const prod = await producer.send("payment.successful", {
+        //   value: {
+        //     userId: paymentIntent.metadata.userId ?? "",
+        //     email: paymentIntent.receipt_email ?? "",
+        //     amount: paymentIntent.amount,
+        //     status: paymentIntent.status === "succeeded" ? "success" : "failed",
+        //     products: JSON.parse(paymentIntent.metadata.cart || "[]"),
+        //   },
+        // });
+        logger.info({
+          message:
+            "Payment successful event processed in development mode, skipping Kafka event and order creation",
         });
-        logger.info(
-          {
-            producerResult: prod,
-          },
-          "Payment successful message sent to Kafka",
-        );
       } else {
         await createOrderInOrderService({
           userId: paymentIntent.metadata.userId ?? "",

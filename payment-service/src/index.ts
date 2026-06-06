@@ -9,8 +9,8 @@ import Stripe from "stripe";
 import { cors } from "hono/cors";
 import sessionRoute from "./routes/session.route.js";
 import webhookRoute from "./routes/webhooks.route.js";
-import { runKafkaSubscriptions } from "./lib/subscriptions.js";
-import { consumer, producer } from "./lib/kafka.js";
+// import { runKafkaSubscriptions } from "./lib/subscriptions.js";
+// import { consumer, producer } from "./lib/kafka.js";
 import { logger } from "@packages/logger";
 
 dotenv.config();
@@ -59,9 +59,9 @@ app.route("/webhooks", webhookRoute);
 const start = async () => {
   try {
     if (process.env.NODE_ENV === "development") {
-      await Promise.all([producer.connect(), consumer.connect()]);
-      await runKafkaSubscriptions();
-      logger.info({ message: "Kafka subscriptions started" });
+      // await Promise.all([producer.connect(), consumer.connect()]);
+      // await runKafkaSubscriptions();
+      logger.info({ message: "Starting Payment Service in development mode" });
     } else {
       logger.info({ message: "Starting Payment Service in production mode..." });
     }

@@ -2,7 +2,7 @@ import Fastify from "fastify";
 import dotenv from "dotenv";
 import connectDB from "./config/db.js";
 import { clerkClient, clerkPlugin, getAuth } from "@clerk/fastify";
-import { shouldBeUser } from "../src/middleware/authMiddleware.js";
+import { shouldBeUser } from "./middleware/authMiddleware.js";
 import { orderRoute } from "./routes/order.js";
 // import { runKafkaSubscriptions } from "./lib/subscriptions.js";
 // import { consumer, producer } from "./lib/kafka.js";

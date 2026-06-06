@@ -1,5 +1,5 @@
-import { createKafkaClient, createConsumer} from "@packages/kafka";
+// import { createKafkaClient, createConsumer} from "@packages/kafka";
 
-const kafkaClient = createKafkaClient("email-service");
+// const kafkaClient = createKafkaClient("email-service");
 
-export const consumer = createConsumer(kafkaClient, "email-service");
+// export const consumer = createConsumer(kafkaClient, "email-service");

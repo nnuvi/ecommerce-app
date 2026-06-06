@@ -6,8 +6,8 @@ import { createConsumer, createKafkaClient } from "@packages/kafka";
 import { sendEmail } from "./lib/mailer.js";
 import { getUser } from "./services/authClient.js";
 import { orderEmailHTML } from "./lib/emailFormater.js";
-import { consumer } from "./lib/kafka.js";
-import { kafkaMailer } from "./lib/kafkaMail.js";
+// import { consumer } from "./lib/kafka.js";
+// import { kafkaMailer } from "./lib/kafkaMail.js";
 import emailRoute from './routes/email.route.js';
 
 // dotenv.config();
@@ -22,8 +22,8 @@ const start = async () => {
   try {
     if (process.env.NODE_ENV === "development") {
       logger.info({message: "Starting Email Service in Kafka mode..."});
-      kafkaMailer();
-      logger.info({ message: "Kafka Mail Sent." });
+      // kafkaMailer();
+      // logger.info({ message: "Kafka Mail Sent." });
     } else {
       logger.info({message: "Starting Email Service in API mode..."});
       app.route("/", emailRoute);
