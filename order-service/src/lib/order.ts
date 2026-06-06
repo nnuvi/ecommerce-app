@@ -1,7 +1,7 @@
 import { Order } from "../models/order.model.js";
 import type { OrderType } from "@packages/types";
 import { getProductById } from "../services/product.service.js";
-import { producer } from "./kafka.js";
+// import { producer } from "./kafka.js";
 import { logger } from "@packages/logger";
 import { sendOrderConfirmationEmail } from "../services/email.service.js";
 
@@ -59,16 +59,20 @@ export const createOrder = async (orderData: OrderType) => {
     const order = await orderDoc.save();
 
     if (process.env.NODE_ENV === "development") {
-      producer.send("order.created", {
-        value: {
-          orderId: order._id.toString(),
-          userId: order.userId,
-          email: order.email,
-          amount: order.amount,
-          status: order.status,
-          products: productItems,
-        },
+      logger.debug({
+        message: "Order created in development mode, skipping Kafka event and email",
+        orderId: order._id.toString(),
       });
+      // producer.send("order.created", {
+      //   value: {
+      //     orderId: order._id.toString(),
+      //     userId: order.userId,
+      //     email: order.email,
+      //     amount: order.amount,
+      //     status: order.status,
+      //     products: productItems,
+      //   },
+      // });
     } else {
       await sendOrderConfirmationEmail({
         _id: order._id.toString(),
