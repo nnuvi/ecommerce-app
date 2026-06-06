@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import { Search, Bell, Home } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -32,7 +32,9 @@ const NavBar = () => {
         <div className="flex items-center gap-4 flex-1 justify-end min-w-0">
           {/* Desktop Search */}
           <div className="hidden sm:block shrink-0">
-            <SearchBar />
+            <Suspense fallback={null}>
+              <SearchBar />
+            </Suspense>
           </div>
 
           {/* Mobile Search Icon */}
@@ -68,7 +70,9 @@ const NavBar = () => {
       {/* Mobile Search Bar (appears below navbar) */}
       {showMobileSearch && (
         <div className="sm:hidden pb-3">
-          <SearchBar />
+          <Suspense fallback={null}>
+            <SearchBar />
+          </Suspense>
         </div>
       )}
     </>
