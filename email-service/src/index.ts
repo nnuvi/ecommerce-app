@@ -19,6 +19,11 @@ app.get('/health', (c) => c.text('OK'));
 
 
 dns.setDefaultResultOrder("ipv4first");
+dns.lookup("smtp-relay.brevo.com", (err, address) => {
+  console.log("DNS RESULT:", err || address);
+  logger.info({ address, err }, "DNS lookup result for smtp-relay.brevo.com");
+});
+
 const start = async () => {
   try {
     if (process.env.NODE_ENV === "development") {

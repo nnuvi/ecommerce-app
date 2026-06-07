@@ -1,13 +1,42 @@
 import nodemailer from "nodemailer";
 import dotenv from "dotenv";
 import { logger } from "@packages/logger";
+import net from "net";
 
 dotenv.config();
 
+function testPort(port: number) {
+  return new Promise((resolve) => {
+    const socket = net.createConnection(port, "smtp-relay.brevo.com");
+
+    socket.setTimeout(5000);
+
+    socket.on("connect", () => {
+      console.log("CONNECTED ON PORT", port);
+      socket.destroy();
+      resolve(true);
+    });
+
+    socket.on("error", (err) => {
+      console.log("FAILED PORT", port, err.message);
+      resolve(false);
+    });
+
+    socket.on("timeout", () => {
+      console.log("TIMEOUT PORT", port);
+      socket.destroy();
+      resolve(false);
+    });
+  });
+}
+
+await testPort(587);
+await testPort(465);
+
 const transporter = nodemailer.createTransport({
   host: "smtp-relay.brevo.com",
-  port: 587,
-  secure: false,
+  port: 465,
+  secure: true,
   auth: {
     user: process.env.BREVO_SMTP_USER,
     pass: process.env.BREVO_SMTP_PASSWORD,
@@ -21,7 +50,10 @@ transporter.verify((err) => {
   if (err) {
     logger.error({ err }, "SMTP verification failed");
   } else {
-    logger.info({ host: "smtp-relay.brevo.com", port: 587 }, "SMTP verification successful");
+    logger.info(
+      { host: "smtp-relay.brevo.com", port: 587 },
+      "SMTP verification successful",
+    );
   }
 });
 
