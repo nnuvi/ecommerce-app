@@ -25,18 +25,26 @@ export async function sendEmail(to: string, subject: string, html: string) {
   //   html,
   // };
   // const info = await transporter.sendMail(mailOptions);
-  const info = await resend.emails.send({
+  const { data, error } = await resend.emails.send({
     from: process.env.EMAIL_FROM!,
     to,
     subject,
     html,
   });
+
+  if (error) {
+    logger.error({ error, to, subject }, "Email failed to send");
+    return { success: false, error };
+  }
+
   logger.info(
     {
       to,
       subject,
+      id: data?.id,
     },
     "Email sent successfully",
   );
-  return info;
+
+  return { success: true, data };
 }

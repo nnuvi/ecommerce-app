@@ -8,24 +8,31 @@ const emailRouter = new Hono();
 emailRouter.post("/send-order-confirmation", async (c) => {
   const order = await c.req.json();
 
-  // Call the services to get the external API data
-  logger.info({ order }, "Order Email")
+  logger.info({ order }, "Order Email");
 
   const mailContent = orderEmailHTML(order);
 
-  if (order.email) {
+  if (!order.email) {
+    return c.json({ success: false, error: "Missing email" }, 400);
+  }
+
+  try {
     await sendEmail(order.email, "Order Confirmation from Ecom", mailContent);
 
     logger.info(
       {
         to: order.email,
         subject: "Order Confirmation from Ecom",
-        message: mailContent,
       },
       "Order confirmation email sent successfully",
     );
+
+    return c.json({ success: true });
+  } catch (err) {
+    logger.error({ err }, "Failed to send email");
+
+    return c.json({ success: false }, 500);
   }
-  return c.json({ success: true });
 });
 
 emailRouter.post("/send-user-welcome-email", async (c) => {
