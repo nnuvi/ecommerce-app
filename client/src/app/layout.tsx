@@ -19,7 +19,7 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Ecom - Best Casual Clothing",
   icons: {
-    icon: "/favicon.ico",
+    icon: "/icon.png",
   },
   description:
     "Ecom is the best place to find the best casual clothings for all seasons",
@@ -33,6 +33,9 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en" suppressHydrationWarning>
+        <head>
+          <link rel="icon" href="/favicon1.ico" />
+        </head>
         <body
           className={`${geistSans.variable} ${geistMono.variable} antialiased bg-stone-100`}
         >
