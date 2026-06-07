@@ -3,6 +3,7 @@ import Link from "next/link";
 import Categories from "./Categories";
 import Filter from "./Filter";
 import ProductCard from "./ProductCard";
+import { Suspense } from "react";
 
 const fetchProducts = async ({
   category,
@@ -48,7 +49,9 @@ const ProductList = async ({
   const products = await fetchProducts({ category, sort, search, params });
   return (
     <div className="w-full">
-      <Categories />
+      <Suspense fallback={null}>
+        <Categories />
+      </Suspense> 
       {params === "products" && <Filter />}
       <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-12">
         {products.map((product) => (
