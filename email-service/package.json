@@ -16,7 +16,8 @@
     "@packages/types": "workspace:*",
     "dotenv": "^17.4.2",
     "hono": "^4.12.18",
-    "nodemailer": "^8.0.7"
+    "nodemailer": "^8.0.7",
+    "resend": "^6.12.4"
   },
   "devDependencies": {
     "@types/node": "^25.6.0",
