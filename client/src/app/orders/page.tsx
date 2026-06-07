@@ -17,6 +17,7 @@ const fetchOrders = async (): Promise<OrdersType> => {
   );
 
   const data = await res.json();
+  console.log("Fetched Orders:", data.orders);
   return data.orders;
 };
 
