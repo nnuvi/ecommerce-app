@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import Footer from "./../components/Footer";
-import NavBar from "../../src/components/NavBar";
+import NavBar from "../components/NavBar";
 import "./globals.css";
 import { ToastContainer } from "react-toastify";
 import { ClerkProvider } from "@clerk/nextjs";
