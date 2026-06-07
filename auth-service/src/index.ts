@@ -14,7 +14,7 @@ app.use(
     origin: [
       "http://localhost:3000",
       "http://localhost:3003",
-      "ecom-client-jcx0p90hm-nvs-projects-fe2a451b.vercel.app",
+      "https://ecom-client-xi.vercel.app",
     ],
     credentials: true,
   }),

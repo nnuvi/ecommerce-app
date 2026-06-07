@@ -36,7 +36,8 @@ const CheckoutForm = ({
             country: "US",
           },
         },
-        return_url: "http://localhost:3003/return",
+        // return_url: "http://localhost:3003/return",
+        return_url: `${process.env.NEXT_PUBLIC_CLIENT_URL}/return`,
       },
     });
 
