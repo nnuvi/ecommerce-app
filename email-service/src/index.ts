@@ -9,6 +9,7 @@ import { orderEmailHTML } from "./lib/emailFormater.js";
 // import { consumer } from "./lib/kafka.js";
 // import { kafkaMailer } from "./lib/kafkaMail.js";
 import emailRoute from './routes/email.route.js';
+import dns from "dns";
 
 // dotenv.config();
 // const kafka = createKafkaClient("email-service");
@@ -17,7 +18,7 @@ const app = new Hono();
 app.get('/health', (c) => c.text('OK'));
 
 
-
+dns.setDefaultResultOrder("ipv4first");
 const start = async () => {
   try {
     if (process.env.NODE_ENV === "development") {
