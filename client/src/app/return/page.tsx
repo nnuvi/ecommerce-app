@@ -9,6 +9,7 @@ export default async function ReturnPage({
   }>;
 }) {
   const params = await searchParams;
+  console.log("ReturnPage searchParams:", params);
 
   return (
     <ReturnClient

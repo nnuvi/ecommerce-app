@@ -18,6 +18,9 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Ecom - Best Casual Clothing",
+  icons: {
+    icon: "/favicon.ico",
+  },
   description:
     "Ecom is the best place to find the best casual clothings for all seasons",
 };
