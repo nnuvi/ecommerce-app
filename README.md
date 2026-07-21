@@ -1,10 +1,10 @@
-# 🛒 E-Commerce Microservices Platform
+# E-Commerce Microservices Platform
 
 A full-stack e-commerce application built using a microservices architecture. The system includes separate services for authentication, products, orders, payments, and email notifications, along with a client and admin application.
 
 ---
 
-## 🚀 Features
+## Features
 
 - User authentication and authorization
 - Product listing and management
@@ -17,7 +17,7 @@ A full-stack e-commerce application built using a microservices architecture. Th
 
 ---
 
-## 🏗 Architecture
+## Architecture
 
 - auth-service
 - product-service
@@ -30,7 +30,7 @@ A full-stack e-commerce application built using a microservices architecture. Th
 
 ---
 
-## ⚙️ Tech Stack
+## Tech Stack
 
 - Node.js
 - Next.js
@@ -47,7 +47,7 @@ A full-stack e-commerce application built using a microservices architecture. Th
 
 ---
 
-## 📦 Shared Packages
+## Shared Packages
 
 - Kafka utilities
 - Type definitions
@@ -55,7 +55,7 @@ A full-stack e-commerce application built using a microservices architecture. Th
 
 ---
 
-## 🐳 Deployment
+## Deployment
 
 - Client: Vercel
 - Backend Services: Render
@@ -63,12 +63,12 @@ A full-stack e-commerce application built using a microservices architecture. Th
 
 ---
 
-## 🔗 Live Demo
+## Live Demo
 
 https://ecom-client-xi.vercel.app/
 
 ---
 
-## 📌 Notes
+## Notes
 
 This project demonstrates microservices architecture, event-driven communication, and scalable backend design.

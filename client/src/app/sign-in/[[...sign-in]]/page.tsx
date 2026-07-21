@@ -58,7 +58,7 @@ export default function SignInPage() {
 
   return (
     <div className="flex flex-col items-center justify-center mt-16">
-      <div className="flex px-9 py-3 rounded-4xl bg-stone-800 mt-4">
+      <div className="flex px-9 py-2 rounded-4xl bg-stone-800 mb-4">
         <button className="text-amber-50" onClick={loginDemo}>
           Use Demo Account
         </button>
