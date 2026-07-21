@@ -14,10 +14,21 @@ const ShippingForm = ({
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<ShippingFormInputs>({
     resolver: zodResolver(shippingFormSchema),
   });
+
+  const fillDemo = () => {
+    reset({
+      name: "Demo Doe",
+      email: "demo@example.com",
+      phone: "0112345678",
+      address: "123 Main Street",
+      city: "Dhaka",
+    });
+  };
 
   // const router = useRouter();
 
@@ -39,7 +50,7 @@ const ShippingForm = ({
           className="border-b border-gray-200 py-2 outline-none text-sm"
           type="text"
           id="name"
-          placeholder="John Doe"
+          placeholder="Jane Doe"
           {...register("name")}
         />
         {errors.name && (
@@ -54,7 +65,7 @@ const ShippingForm = ({
           className="border-b border-gray-200 py-2 outline-none text-sm"
           type="email"
           id="email"
-          placeholder="johndoe@gmail.com"
+          placeholder="janedoe@gmail.com"
           {...register("email")}
         />
         {errors.email && (
@@ -108,6 +119,7 @@ const ShippingForm = ({
       </div>
       <button
         type="submit"
+        onClick={fillDemo}
         className="w-full bg-gray-800 hover:bg-gray-900 transition-all duration-300 text-white p-2 rounded-lg cursor-pointer flex items-center justify-center gap-2"
       >
         Continue

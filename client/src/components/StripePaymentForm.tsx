@@ -54,7 +54,7 @@ const StripePaymentForm = ({
   }, [cart, token]);
 
   if (!token || !clientSecret) {
-    console.log(" But Here, Payment intent secret key: ", clientSecret);
+    // console.log(" But Here, Payment intent secret key: ", clientSecret);
     return <div className="p-4">Loading secure checkout...</div>;
   }
 

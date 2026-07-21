@@ -8,7 +8,7 @@ const Homepage = async ({
   searchParams: Promise<{ category: string }>;
 }) => {
   const category = (await searchParams).category;
-  console.log("Homepage searchParams:", { category });
+
   return (
     <div className="">
       <div className="relative aspect-3/1 mb-8">

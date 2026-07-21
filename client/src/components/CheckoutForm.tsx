@@ -8,6 +8,7 @@ import {
 } from "@stripe/react-stripe-js";
 import { ConfirmError, StripeError } from "@stripe/stripe-js";
 import { useState } from "react";
+import TestCardInfo from "./TestCardInfo";
 
 const CheckoutForm = ({
   shippingForm,
@@ -50,6 +51,8 @@ const CheckoutForm = ({
 
   return (
     <form>
+      <TestCardInfo />
+
       <PaymentElement options={{ layout: "accordion" }} />
 
       <div className={"w-full pt-2.5"}>
