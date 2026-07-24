@@ -2,10 +2,10 @@
   <img src="assets/images/ecom-logo.png" alt="E-Commerce Logo" width="80%">
 </p>
 
-<h4 align="center">
+<p align="center">
   A full-stack e-commerce platform built with a microservices architecture, where users can browse products, manage carts, place orders, and complete secure payments through a seamless shopping experience.
   The platform uses independent services for authentication, products, orders, payments, and notifications, connected through event-driven communication for reliable and scalable workflows.
-</h4>
+</p>
 
 ---
 
