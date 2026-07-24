@@ -16,71 +16,66 @@
     <col style="width:60%">
   </colgroup>
 
-  <thead>
-    <tr>
-      <th align="left">Module</th>
-      <th align="left">Description</th>
-    </tr>
-  </thead>
+  <tr>
+    <th align="left">Module</th>
+    <th align="left">Description</th>
+  </tr>
 
-  <tbody>
+  <tr>
+    <td><strong>Authentication</strong></td>
+    <td>User authentication and authorization with secure session management.</td>
+  </tr>
 
-    <tr>
-      <td><strong>Authentication</strong></td>
-      <td>User authentication and authorization with secure session management.</td>
-    </tr>
+  <tr>
+    <td><strong>Product Management</strong></td>
+    <td>Create, manage, and display products with organized product information.</td>
+  </tr>
 
-    <tr>
-      <td><strong>Product Management</strong></td>
-      <td>Create, manage, and display products with organized product information.</td>
-    </tr>
+  <tr>
+    <td><strong>Product Browsing</strong></td>
+    <td>Browse products and view detailed product information.</td>
+  </tr>
 
-    <tr>
-      <td><strong>Product Browsing</strong></td>
-      <td>Browse products and view detailed product information.</td>
-    </tr>
+  <tr>
+    <td><strong>Shopping Cart</strong></td>
+    <td>Add, remove, and manage products before completing checkout.</td>
+  </tr>
 
-    <tr>
-      <td><strong>Shopping Cart</strong></td>
-      <td>Add, remove, and manage products before completing checkout.</td>
-    </tr>
+  <tr>
+    <td><strong>Order Management</strong></td>
+    <td>Create orders, track order status, and manage the complete order workflow.</td>
+  </tr>
 
-    <tr>
-      <td><strong>Order Management</strong></td>
-      <td>Create orders, track order status, and manage the complete order workflow.</td>
-    </tr>
+  <tr>
+    <td><strong>Payment Processing</strong></td>
+    <td>Stripe integration for secure payments and payment confirmation.</td>
+  </tr>
 
-    <tr>
-      <td><strong>Payment Processing</strong></td>
-      <td>Stripe integration for secure payments and payment confirmation.</td>
-    </tr>
+  <tr>
+    <td><strong>Real-Time Updates</strong></td>
+    <td>Receive real-time payment updates using WebSockets.</td>
+  </tr>
 
-    <tr>
-      <td><strong>Real-Time Updates</strong></td>
-      <td>Receive real-time payment updates using WebSockets.</td>
-    </tr>
+  <tr>
+    <td><strong>Email Notifications</strong></td>
+    <td>Send automated emails for order confirmations and important updates.</td>
+  </tr>
 
-    <tr>
-      <td><strong>Email Notifications</strong></td>
-      <td>Send automated emails for order confirmations and important updates.</td>
-    </tr>
+  <tr>
+    <td><strong>Admin Dashboard</strong></td>
+    <td>Manage products, orders, and platform operations through an admin interface.</td>
+  </tr>
 
-    <tr>
-      <td><strong>Admin Dashboard</strong></td>
-      <td>Manage products, orders, and platform operations through an admin interface.</td>
-    </tr>
+  <tr>
+    <td><strong>Microservices Architecture</strong></td>
+    <td>Independent services for authentication, products, orders, payments, and emails with event-driven communication.</td>
+  </tr>
 
-    <tr>
-      <td><strong>Microservices Architecture</strong></td>
-      <td>Independent services for authentication, products, orders, payments, and emails with event-driven communication.</td>
-    </tr>
+  <tr>
+    <td><strong>Shared Packages</strong></td>
+    <td>Reusable packages for shared types, Kafka utilities, and centralized logging.</td>
+  </tr>
 
-    <tr>
-      <td><strong>Shared Packages</strong></td>
-      <td>Reusable packages for shared types, Kafka utilities, and centralized logging.</td>
-    </tr>
-
-  </tbody>
 </table>
 
 ---
