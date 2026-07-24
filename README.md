@@ -154,38 +154,74 @@ flowchart LR
 
 <h2 align="center">Project Structure</h2>
 
-### Client
-
 ```text
-client/
-├── app/
-├── components/
-├── hooks/
-├── services/
-├── store/
-├── types/
+ecommerce-app/
+│
+├── admin/                         # Admin dashboard application
+│   ├── src/
+│   ├── public/
+│   └── package.json
+│
+├── client/                        # Customer-facing Next.js application
+│   ├── src/
+│   │   ├── app/                   # Application routes and pages
+│   │   ├── components/            # Reusable UI components
+│   │   └── lib/                   # Client utilities
+│   └── package.json
+│
+├── auth-service/                  # Authentication microservice
+│   ├── src/
+│   │   ├── lib/
+│   │   ├── middleware/
+│   │   ├── routes/
+│   │   └── services/
+│   └── package.json
+│
+├── product-service/               # Product management microservice
+│   ├── prisma/
+│   ├── src/
+│   │   ├── controllers/
+│   │   ├── lib/
+│   │   ├── middleware/
+│   │   └── routes/
+│   └── package.json
+│
+├── order-service/                 # Order processing microservice
+│   ├── src/
+│   │   ├── config/
+│   │   ├── lib/
+│   │   ├── middleware/
+│   │   ├── models/
+│   │   ├── routes/
+│   │   └── services/
+│   └── package.json
+│
+├── payment-service/               # Payment processing microservice
+│   ├── src/
+│   │   ├── lib/
+│   │   ├── middleware/
+│   │   ├── routes/
+│   │   └── services/
+│   └── package.json
+│
+├── email-service/                 # Email notification microservice
+│   ├── src/
+│   │   ├── lib/
+│   │   ├── routes/
+│   │   └── services/
+│   └── package.json
+│
+├── packages/                      # Shared packages
+│   ├── kafka/                     # Kafka producer and consumer utilities
+│   ├── logger/                    # Centralized logging utilities
+│   └── types/                     # Shared TypeScript types
+│
+├── docker-compose.yml             # Local service orchestration
+├── pnpm-workspace.yaml            # PNPM monorepo configuration
+├── pnpm-lock.yaml
 ├── package.json
-└── tsconfig.json
-```
-
-### Server
-
-```text
-server/
-├── services/
-│   ├── auth-service/
-│   ├── product-service/
-│   ├── order-service/
-│   ├── payment-service/
-│   └── email-service/
-│
-├── packages/
-│   ├── types/
-│   ├── kafka/
-│   └── logger/
-│
-├── docker-compose.yml
-└── package.json
+├── tsconfig.base.json
+└── .dockerignore
 ```
 
 ---
