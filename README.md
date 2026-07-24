@@ -1,9 +1,10 @@
 <p align="center">
-  <img src="assets/images/ecommerce-logo.png" alt="E-Commerce Logo" width="80%">
+  <img src="assets/images/ecom-logo.png" alt="E-Commerce Logo" width="80%">
 </p>
 
 <h3 align="center">
-  A full-stack e-commerce platform built with a microservices architecture for product management, order processing, payments, and automated notifications.
+  A full-stack e-commerce platform built with a microservices architecture, where users can browse products, manage carts, place orders, and complete secure payments through a seamless shopping experience.
+  The platform uses independent services for authentication, products, orders, payments, and notifications, connected through event-driven communication for reliable and scalable workflows.
 </h3>
 
 ---
@@ -260,28 +261,36 @@ npm run dev
 - Backend Services: Render
 - Containerized using Docker
 
----
+<!-- ---
 
 <h2 align="center">Live Demo</h2>
 
-https://ecom-client-xi.vercel.app/
+https://ecom-client-xi.vercel.app/ -->
 
 ---
 
 <h2 align="center">Future Improvements</h2>
 
-- Improve service monitoring and logging.
-- Add more automated testing across services.
-- Improve CI/CD workflow.
-- Add advanced admin features.
-- Enhance security and performance.
-- Improve scalability and service communication.
+- Add advanced admin features for managing products, orders, and users.
+- Add product reviews, ratings, and customer feedback.
+- Improve product search with filtering, sorting, and better discovery.
+- Add wishlist and saved products functionality.
+- Add discount codes, coupons, and promotional features.
+- Improve checkout experience and order flow.
+- Add better loading states, empty states, and error handling across the application.
+- Improve responsive UI and add theme customization options.
+- Add more account settings and user customization features.
+- Add order tracking and improved order history.
+- Improve authentication security and account protection.
+- Improve monitoring, logging, and overall system performance.
+<!-- - Add automated testing for services and applications.
+- Enhance CI/CD workflow and deployment process. -->
 
 ---
 
-<h2 align="center">Notes</h2>
+<!-- <h2 align="center">Notes</h2>
 
-This project demonstrates microservices architecture, event-driven communication, distributed services, and scalable backend design patterns.
+This project demonstrates microservices architecture, event-driven communication, distributed services, and scalable backend design patterns. -->
 
 
 <!-- # E-Commerce Microservices Platform
