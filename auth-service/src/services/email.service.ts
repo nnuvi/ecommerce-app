@@ -1,4 +1,4 @@
-import { logger } from "@packages/logger";
+import { logger } from "@packages/logger/server";
 
 export const sendWelcomeEmail = async (user: any) => {
   try {

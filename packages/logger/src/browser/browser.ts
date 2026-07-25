@@ -1,4 +1,4 @@
-import type { LogData, LogLevel } from "./types.js";
+import type { LogData, LogLevel } from "../shared/types.js";
 
 const LOG_ENDPOINT =
   process.env.NEXT_PUBLIC_LOG_ENDPOINT || "http://localhost:8008/logs";
@@ -15,10 +15,7 @@ async function send(level: LogLevel, data?: LogData, message?: string) {
         message,
         ...data,
         source: "frontend",
-        url:
-          typeof window !== "undefined"
-            ? window.location.href
-            : undefined,
+        url: typeof window !== "undefined" ? window.location.href : undefined,
       }),
     });
   } catch {

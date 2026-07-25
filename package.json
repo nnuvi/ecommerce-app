@@ -2,6 +2,7 @@
   "name": "ecom",
   "private": true,
   "packageManager": "pnpm@11.0.8",
+  "type": "module",
   "scripts": {
     "dev:client": "pnpm --filter client dev",
     "dev:admin": "pnpm --filter admin dev",
@@ -10,31 +11,40 @@
     "dev:payment": "pnpm --filter payment-service dev",
     "dev:auth": "pnpm --filter auth-service dev",
     "dev:mail": "pnpm --filter email-service dev",
-
     "dev:types": "pnpm --filter @packages/types dev",
     "dev:kafka": "pnpm --filter @packages/kafka dev",
     "dev:logger": "pnpm --filter @packages/logger dev",
     "dev:packages": "pnpm --parallel --filter @packages/types --filter @packages/kafka --filter @packages/logger dev",
-
     "dev:services": "pnpm --parallel dev:product dev:order dev:payment dev:auth dev:mail",
     "dev:web": "pnpm --parallel dev:client dev:admin",
-
     "dev:all": "pnpm --parallel dev:packages dev:services dev:web",
-    
     "dev": "pnpm -r dev",
     "build": "pnpm -r build",
     "start": "pnpm -r start",
     "clean": "pnpm -r clean",
     "dev:infra": "docker compose up kafka postgres",
-    "deploy:services": "pnpm build && pnpm -r start"
+    "deploy:services": "pnpm build && pnpm -r start",
+    "prepare": "husky",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier . --write",
+    "format:check": "prettier . --check"
   },
-  "workspaces": [
-    "packages/*",
-    "product-service",
-    "order-service"
-  ],
   "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@types/node": "^26.1.1",
+    "eslint": "^9.39.4",
+    "husky": "^9.1.7",
+    "lint-staged": "^17.2.0",
+    "prettier": "^3.9.6",
     "tsx": "^4.21.0",
-    "typescript": "^5.8.2"
+    "typescript": "^5.8.2",
+    "typescript-eslint": "^8.65.0"
+  },
+  "lint-staged": {
+    "*.{js,ts,tsx,json}": [
+      "eslint --fix",
+      "prettier --write"
+    ]
   }
 }

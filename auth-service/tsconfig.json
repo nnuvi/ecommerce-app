@@ -1,10 +1,20 @@
+// {
+//   "extends": "../tsconfig.base.json",
+//   "compilerOptions": {
+//     "module": "NodeNext",
+//     "moduleResolution": "NodeNext",
+//     "types": ["node"],
+//     "outDir": "dist",
+//     "rootDir": "src",
+//   }
+// }
+
 {
-  "extends": "../tsconfig.base.json",
+  "extends": "@packages/tsconfig/node",
   "compilerOptions": {
-    "module": "NodeNext",
-    "moduleResolution": "NodeNext",
-    "types": ["node"],
-    "outDir": "dist",
     "rootDir": "src",
-  }
+    "outDir": "dist"
+  },
+  "include": ["src"],
+  "exclude": ["node_modules", "dist"]
 }

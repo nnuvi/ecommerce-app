@@ -3,7 +3,7 @@ import { getClerkClient } from "../lib/clerk.js";
 // import { producer } from "../lib/kafka.js";
 import { clerkClient } from "@clerk/express";
 import { getAuth } from "@clerk/express";
-import { logger } from "@packages/logger";
+import { logger } from "@packages/logger/server";
 import { shouldBeAdmin } from "../middleware/authMiddleware.js";
 
 const router: Router = Router();

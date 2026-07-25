@@ -3,7 +3,7 @@ import { shouldBeAdmin, shouldBeUser } from "../middleware/authMiddleware.js";
 import { Order } from "../models/order.model.js";
 import { startOfMonth, subMonths } from "date-fns";
 import { OrderChartType, OrderType } from "@packages/types";
-import { logger } from "@packages/logger";
+import { logger } from "@packages/logger/server";
 import { createOrder } from "../lib/order.js";
 
 export const orderRoute = async (fastify: FastifyInstance) => {
@@ -38,7 +38,7 @@ export const orderRoute = async (fastify: FastifyInstance) => {
       return reply.code(200).send({ orders });
     },
   );
-  
+
   fastify.get(
     "/order-chart",
     { preHandler: shouldBeAdmin },
@@ -143,4 +143,3 @@ export const orderRoute = async (fastify: FastifyInstance) => {
     },
   );
 };
-

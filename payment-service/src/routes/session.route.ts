@@ -5,7 +5,7 @@ import type { CartItemsType } from "@packages/types";
 
 import { getStripeProductPrice } from "../lib/stripeProduct.js";
 import { meta } from "zod/v4/core";
-import { logger } from "@packages/logger";
+import { logger } from "@packages/logger/server";
 
 const sessionRoute = new Hono();
 

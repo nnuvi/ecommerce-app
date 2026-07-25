@@ -1,4 +1,4 @@
-import { logger } from "@packages/logger";
+import { logger } from "@packages/logger/server";
 import { OrderType } from "@packages/types";
 
 export const sendOrderConfirmationEmail = async (order: OrderType) => {
@@ -32,7 +32,7 @@ export const sendOrderConfirmationEmail = async (order: OrderType) => {
     }
     logger.info(
       {
-        order
+        order,
       },
       "Sending order confirmation email",
     );

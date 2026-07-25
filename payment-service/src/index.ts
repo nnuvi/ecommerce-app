@@ -11,7 +11,7 @@ import sessionRoute from "./routes/session.route.js";
 import webhookRoute from "./routes/webhooks.route.js";
 // import { runKafkaSubscriptions } from "./lib/subscriptions.js";
 // import { consumer, producer } from "./lib/kafka.js";
-import { logger } from "@packages/logger";
+import { logger } from "@packages/logger/server";
 
 dotenv.config();
 

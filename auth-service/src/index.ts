@@ -1,5 +1,5 @@
 import { clerkMiddleware } from "@clerk/express";
-import { logger } from "@packages/logger";
+import { logger } from "@packages/logger/server";
 import cors from "cors";
 import dotenv from "dotenv";
 import express, { NextFunction, Request, Response } from "express";

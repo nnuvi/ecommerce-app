@@ -1,0 +1,12 @@
+{
+  "name": "@packages/tsconfig",
+  "private": true,
+  "version": "1.0.0",
+  "exports": {
+    "./base": "./base.json",
+    "./node": "./node.json",
+    "./next": "./next.json",
+    "./react": "./react.json",
+    "./browser": "./browser.json"
+  }
+}

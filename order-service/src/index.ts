@@ -6,7 +6,7 @@ import { shouldBeUser } from "./middleware/authMiddleware.js";
 import { orderRoute } from "./routes/order.js";
 // import { runKafkaSubscriptions } from "./lib/subscriptions.js";
 // import { consumer, producer } from "./lib/kafka.js";
-import { logger } from "@packages/logger";
+import { logger } from "@packages/logger/server";
 
 dotenv.config({ debug: true });
 const fastify = Fastify({

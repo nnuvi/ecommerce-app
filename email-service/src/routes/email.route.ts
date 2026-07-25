@@ -1,7 +1,7 @@
 import { Hono } from "hono";
 import { sendEmail } from "../lib/mailer.js";
 import { orderEmailHTML } from "../lib/emailFormater.js";
-import { logger } from "@packages/logger";
+import { logger } from "@packages/logger/server";
 
 const emailRouter = new Hono();
 

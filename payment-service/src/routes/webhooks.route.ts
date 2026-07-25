@@ -2,9 +2,7 @@ import { Hono } from "hono";
 import Stripe from "stripe";
 import stripe from "../lib/stripe.js";
 // import { producer } from "../lib/kafka.js";
-import { shouldBeUser } from "../middleware/authMiddleware.js";
-import { logger } from "@packages/logger";
-import { email } from "zod";
+import { logger } from "@packages/logger/server";
 import { createOrderInOrderService } from "../services/order.service.js";
 // import { getUser } from "../../../email-service/src/services/authClient.js";
 
@@ -46,7 +44,7 @@ webhookRoute.post("/stripe", async (c) => {
   }
 
   switch (event.type) {
-    case "payment_intent.succeeded":
+    case "payment_intent.succeeded": {
       const paymentIntent = event.data.object as Stripe.PaymentIntent;
 
       const metadata = paymentIntent.metadata;
@@ -85,16 +83,19 @@ webhookRoute.post("/stripe", async (c) => {
           products: JSON.parse(paymentIntent.metadata.cart || "[]"),
         });
       }
-      break;
 
-    default:
+      break;
+    }
+    default: {
       logger.warn(
         {
           eventType: event.type,
         },
         "Unhandled webhook event",
       );
+
       break;
+    }
   }
   return c.json({ received: true });
 });

@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { Prisma } from "../../generated/prisma/client.js";
 import { prisma } from "../lib/prisma.js";
 import { log } from "node:console";
-import { logger } from "@packages/logger";
+import { logger } from "@packages/logger/server";
 
 export const createProduct = async (req: Request, res: Response) => {
   const data: Prisma.ProductCreateInput = req.body;

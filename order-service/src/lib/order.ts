@@ -2,7 +2,7 @@ import { Order } from "../models/order.model.js";
 import type { OrderType } from "@packages/types";
 import { getProductById } from "../services/product.service.js";
 // import { producer } from "./kafka.js";
-import { logger } from "@packages/logger";
+import { logger } from "@packages/logger/server";
 import { sendOrderConfirmationEmail } from "../services/email.service.js";
 
 export const createOrder = async (orderData: OrderType) => {
@@ -60,7 +60,8 @@ export const createOrder = async (orderData: OrderType) => {
 
     if (process.env.NODE_ENV === "development") {
       logger.debug({
-        message: "Order created in development mode, skipping Kafka event and email",
+        message:
+          "Order created in development mode, skipping Kafka event and email",
         orderId: order._id.toString(),
       });
       // producer.send("order.created", {
