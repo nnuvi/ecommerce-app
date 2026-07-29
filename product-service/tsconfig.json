@@ -1,9 +1,9 @@
 {
   "extends": "@packages/tsconfig/node",
   "compilerOptions": {
-    "outDir": "dist",
-    "rootDirs": ["src", "generated"]
+    "rootDir": "src",
+    "outDir": "dist"
   },
-  "include": ["src", "generated"],
+  "include": ["src"],
   "exclude": ["dist", "node_modules"]
 }

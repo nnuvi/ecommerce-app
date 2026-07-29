@@ -4,9 +4,9 @@ export default async function ProductsPage({
   searchParams,
 }: {
   searchParams: Promise<{
-    category?: string;
-    sort?: string;
-    search?: string;
+    category: string;
+    sort: string;
+    search: string;
   }>;
 }) {
   const { category, sort, search } = await searchParams;

@@ -46,12 +46,17 @@ const ProductList = async ({
   search?: string;
   params: "homepage" | "products";
 }) => {
-  const products = await fetchProducts({ category, sort, search, params });
+  const products = await fetchProducts({
+    params,
+    ...(category && { category }),
+    ...(sort && { sort }),
+    ...(search && { search }),
+  });
   return (
     <div className="w-full">
       <Suspense fallback={null}>
         <Categories />
-      </Suspense> 
+      </Suspense>
       {params === "products" && <Filter />}
       <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-12">
         {products.map((product) => (

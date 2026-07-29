@@ -39,7 +39,7 @@ import {
 import { useAuth } from "@clerk/nextjs";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { toast } from "react-toastify";
-import { logger } from "@packages/logger";
+import { logger } from "@packages/logger/browser";
 
 const fetchCategories = async () => {
   const res = await fetch(
@@ -68,7 +68,7 @@ const AddProduct = () => {
 
   const { getToken } = useAuth();
 
-  const { isPending, error, data } = useQuery({
+  const { data } = useQuery({
     queryKey: ["categories"],
     queryFn: fetchCategories,
   });
@@ -96,11 +96,11 @@ const AddProduct = () => {
       }
       return await res.json();
     },
-    onSuccess: (data) => {
+    onSuccess: () => {
       toast.success("Product added successfully!");
       form.reset();
     },
-    onError: (error: any) => {
+    onError: (error) => {
       logger.error({ error }, "Mutation error.");
       toast.error("Failed to add product!");
     },

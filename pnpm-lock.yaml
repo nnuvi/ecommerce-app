@@ -47,6 +47,9 @@ importers:
       '@packages/kafka':
         specifier: workspace:*
         version: link:../packages/kafka
+      '@packages/logger':
+        specifier: workspace:*
+        version: link:../packages/logger
       '@packages/types':
         specifier: workspace:*
         version: link:../packages/types
@@ -141,6 +144,9 @@ importers:
         specifier: ^4.3.6
         version: 4.4.3
     devDependencies:
+      '@packages/tsconfig':
+        specifier: workspace:*
+        version: link:../packages/tsconfig
       '@tailwindcss/postcss':
         specifier: ^4
         version: 4.2.4
@@ -232,6 +238,9 @@ importers:
       '@packages/kafka':
         specifier: workspace:*
         version: link:../packages/kafka
+      '@packages/logger':
+        specifier: workspace:*
+        version: link:../packages/logger
       '@packages/types':
         specifier: workspace:*
         version: link:../packages/types
@@ -397,9 +406,15 @@ importers:
 
   packages/db:
     dependencies:
+      '@prisma/adapter-pg':
+        specifier: ^7.8.0
+        version: 7.8.0
       '@prisma/client':
         specifier: ^7.8.0
         version: 7.8.0(prisma@7.8.0(@types/react-dom@19.2.3(@types/react@19.2.14))(@types/react@19.2.14)(react-dom@19.2.6(react@19.2.6))(react@19.2.6)(typescript@7.0.2))(typescript@7.0.2)
+      dotenv:
+        specifier: ^17.4.2
+        version: 17.4.2
     devDependencies:
       '@packages/tsconfig':
         specifier: workspace:*
@@ -515,6 +530,9 @@ importers:
       '@clerk/express':
         specifier: ^2.1.5
         version: 2.1.14(express@5.2.1)(react-dom@19.2.6(react@19.2.6))(react@19.2.6)
+      '@packages/db':
+        specifier: workspace:*
+        version: link:../packages/db
       '@packages/kafka':
         specifier: workspace:*
         version: link:../packages/kafka
@@ -524,12 +542,6 @@ importers:
       '@packages/types':
         specifier: workspace:*
         version: link:../packages/types
-      '@prisma/adapter-pg':
-        specifier: ^7.8.0
-        version: 7.8.0
-      '@prisma/client':
-        specifier: ^7.8.0
-        version: 7.8.0(prisma@7.8.0(@types/react-dom@19.2.3(@types/react@19.2.14))(@types/react@19.2.14)(react-dom@19.2.6(react@19.2.6))(react@19.2.6)(typescript@6.0.3))(typescript@6.0.3)
       cors:
         specifier: ^2.8.6
         version: 2.8.6
@@ -5978,13 +5990,6 @@ snapshots:
       - pg-native
 
   '@prisma/client-runtime-utils@7.8.0': {}
-
-  '@prisma/client@7.8.0(prisma@7.8.0(@types/react-dom@19.2.3(@types/react@19.2.14))(@types/react@19.2.14)(react-dom@19.2.6(react@19.2.6))(react@19.2.6)(typescript@6.0.3))(typescript@6.0.3)':
-    dependencies:
-      '@prisma/client-runtime-utils': 7.8.0
-    optionalDependencies:
-      prisma: 7.8.0(@types/react-dom@19.2.3(@types/react@19.2.14))(@types/react@19.2.14)(react-dom@19.2.6(react@19.2.6))(react@19.2.6)(typescript@6.0.3)
-      typescript: 6.0.3
 
   '@prisma/client@7.8.0(prisma@7.8.0(@types/react-dom@19.2.3(@types/react@19.2.14))(@types/react@19.2.14)(react-dom@19.2.6(react@19.2.6))(react@19.2.6)(typescript@7.0.2))(typescript@7.0.2)':
     dependencies:

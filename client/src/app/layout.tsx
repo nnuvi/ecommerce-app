@@ -5,6 +5,7 @@ import NavBar from "../components/NavBar";
 import "./globals.css";
 import { ToastContainer } from "react-toastify";
 import { ClerkProvider } from "@clerk/nextjs";
+import AuthProvider from "@/provider/AuthProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -39,12 +40,14 @@ export default function RootLayout({
         <body
           className={`${geistSans.variable} ${geistMono.variable} antialiased bg-stone-100`}
         >
-          <div className="mx-auto p-4 text-stone-700 sm:max-w-xl md:max-w-2xl lg:max-w-3xl xl:max-w-6xl">
-            <NavBar />
-            {children}
-            <Footer />
-            <ToastContainer />
-          </div>
+          <AuthProvider>
+            <div className="mx-auto p-4 text-stone-700 sm:max-w-xl md:max-w-2xl lg:max-w-3xl xl:max-w-6xl">
+              <NavBar />
+              {children}
+              <Footer />
+              <ToastContainer />
+            </div>
+          </AuthProvider>
         </body>
       </html>
     </ClerkProvider>

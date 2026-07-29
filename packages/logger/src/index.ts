@@ -3,4 +3,4 @@
 // export type { LogLevel, LogData } from "./shared/types.js";
 // src/index.ts
 
-export * from "./shared/types";
+export * from "./shared/types.js";

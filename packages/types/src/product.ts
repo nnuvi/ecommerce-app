@@ -6,9 +6,11 @@ export type ProductType = {
   shortDescription: string;
   description: string;
   price: number;
-  sizes: string[];
-  colors: string[];
-  // images: string[]; 
+  // sizes: string[];
+  sizes: [string, ...string[]];
+  // colors: string[];
+  colors: [string, ...string[]];
+  // images: string[];
   images: Record<string, string>;
   createdAt: Date;
   updatedAt: Date;
@@ -92,14 +94,14 @@ export const ProductFormSchema = z
   .refine(
     (data) => {
       const missingImages = data.colors.filter(
-        (color: string) => !data.images?.[color]
+        (color: string) => !data.images?.[color],
       );
       return missingImages.length === 0;
     },
     {
       message: "Image is required for each selected color!",
       path: ["images"],
-    }
+    },
   );
 
 export type CategoryType = {

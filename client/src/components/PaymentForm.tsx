@@ -1,8 +1,7 @@
-import { PaymentFormInputs, paymentFormSchema } from "@packages/types";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ArrowRight, ShoppingCart } from "lucide-react";
+import { PaymentFormInputs, paymentFormSchema } from "@packages/types";
+import { ShoppingCart } from "lucide-react";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
 import { SubmitHandler, useForm } from "react-hook-form";
 
 const PaymentForm = () => {
@@ -12,11 +11,16 @@ const PaymentForm = () => {
     formState: { errors },
   } = useForm<PaymentFormInputs>({
     resolver: zodResolver(paymentFormSchema),
+
+    defaultValues: {
+      cardHolder: "Demo Doe",
+      cardNumber: "4242424242424242",
+      expirationDate: "12/30",
+      cvv: "123",
+    },
   });
 
-  const router = useRouter();
-
-  const handlePaymentForm: SubmitHandler<PaymentFormInputs> = (data) => {};
+  const handlePaymentForm: SubmitHandler<PaymentFormInputs> = () => {};
 
   return (
     <form

@@ -1,15 +1,12 @@
 import { serve } from "@hono/node-server";
-import { Hono } from "hono";
-import "dotenv/config";
 import { logger } from "@packages/logger/server";
+import "dotenv/config";
+import { Hono } from "hono";
 // import { createConsumer, createKafkaClient } from "@packages/kafka";
-import { sendEmail } from "./lib/mailer.js";
-import { getUser } from "./services/authClient.js";
-import { orderEmailHTML } from "./lib/emailFormater.js";
 // import { consumer } from "./lib/kafka.js";
 // import { kafkaMailer } from "./lib/kafkaMail.js";
-import emailRoute from "./routes/email.route.js";
 import dns from "dns";
+import emailRoute from "./routes/email.route.js";
 
 // dotenv.config();
 // const kafka = createKafkaClient("email-service");

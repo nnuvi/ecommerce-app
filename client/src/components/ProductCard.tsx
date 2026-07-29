@@ -30,6 +30,10 @@ const ProductCard = ({ product }: { product: ProductType }) => {
   };
 
   const handleAddToCart = () => {
+    if (!productTypes.size || !productTypes.color) {
+      toast.error("Please select size and color");
+      return;
+    }
     addToCart({
       ...product,
       quantity: 1,
@@ -44,7 +48,7 @@ const ProductCard = ({ product }: { product: ProductType }) => {
       <Link href={`/products/${product.id}`}>
         <div className="relative aspect-2/3 overflow-hidden">
           <Image
-            src={product.images[productTypes.color]}
+            src={product.images[productTypes.color] ?? ""}
             alt={product.name}
             sizes="(max-width: 640px) 100vw,
                (max-width: 768px) 50vw,

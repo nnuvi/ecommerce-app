@@ -41,6 +41,25 @@ const StripePaymentForm = ({
   const [token, setToken] = useState<string | null>(null);
   const [clientSecret, setClientSecret] = useState<string | null>(null);
 
+  // useEffect(() => {
+  //   const createPayment = async () => {
+  //     const token = await getToken();
+
+  //     if (!token || cart.length === 0) return;
+
+  //     const secret = await fetchClientSecret(cart, token);
+
+  //     setClientSecret(secret);
+  //   };
+
+  //   createPayment();
+  // }, [cart, getToken]);
+
+  // if (!clientSecret) {
+  //   // console.log(" But Here, Payment intent secret key: ", clientSecret);
+  //   return <div className="p-4">Loading secure checkout...</div>;
+  // }
+
   useEffect(() => {
     getToken().then((token) => setToken(token));
   }, []);

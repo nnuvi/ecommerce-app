@@ -1,8 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Get a free hosted Postgres database in seconds: `npx create-db`
-
 generator client {
   provider = "prisma-client"
   output   = "../generated/prisma"
@@ -10,4 +5,116 @@ generator client {
 
 datasource db {
   provider = "postgresql"
+}
+
+model Product {
+  id               Int    @id @default(autoincrement())
+  name             String
+  shortDescription String
+  description      String
+
+  price Float
+
+  sizes  String[]
+  colors String[]
+  images Json
+
+  stock Int @default(0)
+
+  categorySlug String
+  category     Category @relation(fields: [categorySlug], references: [slug])
+
+  orderItems OrderItem[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  reviews   Review[]
+}
+
+model Category {
+  id Int @id @default(autoincrement())
+
+  name String
+  slug String @unique
+
+  products Product[]
+}
+
+model Order {
+  id Int @id @default(autoincrement())
+
+  userId String
+  email  String
+
+  totalAmount Float
+
+  status OrderStatus @default(PENDING)
+
+  items OrderItem[]
+
+  shippingAddress Json?
+
+  stripeSessionId String        @unique
+  paymentIntentId String?
+  paymentStatus   PaymentStatus @default(PENDING)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  coupon    Coupon?  @relation(fields: [couponId], references: [id])
+  couponId  Int?
+}
+
+model OrderItem {
+  id Int @id @default(autoincrement())
+
+  orderId Int
+  order   Order @relation(fields: [orderId], references: [id], onDelete: Cascade)
+
+  productId Int?
+  product   Product? @relation(fields: [productId], references: [id])
+
+  // Snapshot data
+  productName String
+  price       Float
+  quantity    Int
+
+  createdAt DateTime @default(now())
+}
+
+enum OrderStatus {
+  PENDING
+  PROCESSING
+  SHIPPED
+  DELIVERED
+  CANCELLED
+  COMPLETED
+}
+
+enum PaymentStatus {
+  PENDING
+  PAID
+  FAILED
+  REFUNDED
+}
+
+model Coupon {
+  id       Int    @id @default(autoincrement())
+  code     String @unique
+  discount Float
+
+  orders Order[]
+}
+
+model Review {
+  id Int @id @default(autoincrement())
+
+  userId String
+
+  productId Int
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  rating  Int
+  comment String?
+
+  createdAt DateTime @default(now())
 }

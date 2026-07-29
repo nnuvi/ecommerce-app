@@ -17,7 +17,6 @@
 {
   "extends": "@packages/tsconfig/next",
   "compilerOptions": {
-    "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"],
       "@packages/*": ["../packages/*/src"]

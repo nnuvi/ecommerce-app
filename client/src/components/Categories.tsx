@@ -1,13 +1,4 @@
 "use client";
-import {
-  ShoppingBasket,
-  Shirt,
-  Glasses,
-  Briefcase,
-  Venus,
-  Hand,
-  Footprints,
-} from "lucide-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 const categories = [

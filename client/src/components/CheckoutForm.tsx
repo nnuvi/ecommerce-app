@@ -6,9 +6,10 @@ import {
   useStripe,
   useElements,
 } from "@stripe/react-stripe-js";
-import { ConfirmError, StripeError } from "@stripe/stripe-js";
+import { StripeError } from "@stripe/stripe-js";
 import { useState } from "react";
 import TestCardInfo from "./TestCardInfo";
+import { logger } from "@packages/logger/browser";
 
 const CheckoutForm = ({
   shippingForm,
@@ -21,6 +22,7 @@ const CheckoutForm = ({
   const [error, setError] = useState<StripeError | null>(null);
 
   const handleClick = async () => {
+    logger.debug({ stripe, elements }, "Stripe Elements");
     if (!stripe || !elements) return;
 
     setLoading(true);
@@ -44,6 +46,13 @@ const CheckoutForm = ({
 
     if (error) {
       setError(error || "Payment failed");
+      logger.debug(
+        {
+          error,
+          return_url: process.env.NEXT_PUBLIC_CLIENT_URL,
+        },
+        "Payment error",
+      );
     }
 
     setLoading(false);

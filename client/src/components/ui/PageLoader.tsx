@@ -1,0 +1,17 @@
+import Loader from "./Loader";
+
+export default function PageLoader() {
+  return (
+    <div
+      className="
+        min-h-screen
+        flex
+        items-center
+        justify-center
+      "
+    >
+      {/* <Spinner /> */}
+      <Loader />
+    </div>
+  );
+}

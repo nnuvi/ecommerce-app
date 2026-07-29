@@ -1,7 +1,7 @@
 import type { LogData, LogLevel } from "../shared/types.js";
 
 const LOG_ENDPOINT =
-  process.env.NEXT_PUBLIC_LOG_ENDPOINT || "http://localhost:8008/logs";
+  process.env.NEXT_PUBLIC_LOG_ENDPOINT || "http://localhost:3003/api/logs";
 
 async function send(level: LogLevel, data?: LogData, message?: string) {
   try {

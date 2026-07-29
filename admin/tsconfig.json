@@ -1,15 +1,32 @@
-{
-  "extends": "../tsconfig.base.json",
-  "compilerOptions": {
-    "module": "NodeNext",
-    "moduleResolution": "NodeNext",
-    "jsx": "preserve",
-    "noEmit": true,
-    "types": ["node"],
+// {
+//   "extends": "@packages/tsconfig/next",
+//   "compilerOptions": {
+//     "module": "NodeNext",
+//     "moduleResolution": "NodeNext",
+//     "jsx": "preserve",
+//     "noEmit": true,
+//     "types": ["node"],
 
+//     "paths": {
+//       "@/*": ["./src/*"],
+//       "@packages/*": ["../packages/*/dist"]
+//     }
+//   }
+// }
+
+{
+  "extends": "@packages/tsconfig/next",
+  "compilerOptions": {
     "paths": {
       "@/*": ["./src/*"],
-      "@packages/*": ["../packages/*/dist"]
-    }
-  }
+      "@packages/*": ["../packages/*/src"]
+    },
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ]
+  },
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "exclude": ["node_modules"]
 }
