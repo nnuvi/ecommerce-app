@@ -4,9 +4,12 @@ import Image from "next/image";
 
 const fetchProduct = async (id: string): Promise<ProductType> => {
   console.log(`Fetch: Fetching product with ID: ${id}`);
-  const res = await fetch(`${process.env.NEXT_PUBLIC_PRODUCT_SERVICE_URL}/products/${id}`, {
-    cache: "no-store",
-  });
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_PRODUCT_SERVICE_URL}/products/${id}`,
+    {
+      cache: "no-store",
+    },
+  );
   if (!res.ok) {
     throw new Error("Failed to fetch product");
   }
@@ -16,7 +19,7 @@ const fetchProduct = async (id: string): Promise<ProductType> => {
 export const generateMetadata = async ({
   params,
 }: {
-  params: Promise<{ id: string }>
+  params: Promise<{ id: string }>;
 }) => {
   console.log(`GenerateMetadata: Received params:`, await params);
   const product = await fetchProduct((await params).id);
@@ -30,7 +33,7 @@ const ProductPage = async ({
   params,
   searchParams,
 }: {
-  params: Promise<{ id: string }>
+  params: Promise<{ id: string }>;
   searchParams: Promise<{ color: string; size: string }>;
 }) => {
   console.log(`Page: Received params:`, await params);
@@ -50,7 +53,7 @@ const ProductPage = async ({
       {/* IMAGE */}
       <div className="w-full lg:w-5/12 relative aspect-2/3">
         <Image
-          src={product.images[selectedColor]}
+          src={product.images[selectedColor]!}
           alt={product.name}
           fill
           className="object-contain rounded-md"
