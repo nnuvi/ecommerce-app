@@ -17,6 +17,8 @@
 {
   "extends": "@packages/tsconfig/next",
   "compilerOptions": {
+    "declaration": false,
+    "declarationMap": false,
     "paths": {
       "@/*": ["./src/*"],
       "@packages/*": ["../packages/*/src"]

@@ -12,13 +12,20 @@ export default async function ReturnPage({
   console.log("ReturnPage searchParams:", params);
 
   return (
+    // <ReturnClient
+    //   status={params.redirect_status}
+    //   paymentIntent={params.payment_intent}
+    // />
     <ReturnClient
-      status={params.redirect_status}
-      paymentIntent={params.payment_intent}
+      {...(params.redirect_status && {
+        status: params.redirect_status,
+      })}
+      {...(params.payment_intent && {
+        paymentIntent: params.payment_intent,
+      })}
     />
   );
 }
-
 
 // "use client";
 
