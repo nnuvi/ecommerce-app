@@ -9,11 +9,11 @@
     "lint": "eslint"
   },
   "dependencies": {
-    "@packages/kafka": "workspace:*",
-    "@packages/types": "workspace:*",
-    "@packages/logger": "workspace:*",
     "@clerk/nextjs": "^7.2.3",
     "@hookform/resolvers": "^5.2.2",
+    "@packages/kafka": "workspace:*",
+    "@packages/logger": "workspace:*",
+    "@packages/types": "workspace:*",
     "@stripe/react-stripe-js": "^6.3.0",
     "@stripe/stripe-js": "^9.4.0",
     "lucide": "^0.577.0",
@@ -29,12 +29,10 @@
   "devDependencies": {
     "@packages/tsconfig": "workspace:*",
     "@tailwindcss/postcss": "^4",
-    "@types/node": "^20",
+    "@types/node": "^26.1.1",
     "@types/react": "^19",
     "@types/react-dom": "^19",
-    "eslint": "^9",
     "eslint-config-next": "16.1.6",
-    "tailwindcss": "^4",
-    "typescript": "^5"
+    "tailwindcss": "^4"
   }
 }
