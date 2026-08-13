@@ -11,9 +11,6 @@ importers:
       '@eslint/js':
         specifier: ^10.0.1
         version: 10.0.1(eslint@9.39.5(jiti@2.7.0))
-      '@types/node':
-        specifier: ^26.1.1
-        version: 26.1.1
       eslint:
         specifier: ^9.39.4
         version: 9.39.5(jiti@2.7.0)
@@ -415,6 +412,9 @@ importers:
       '@packages/tsconfig':
         specifier: workspace:*
         version: link:../tsconfig
+      '@types/node':
+        specifier: ^26.1.1
+        version: 26.1.1
 
   packages/tsconfig: {}
 
@@ -427,6 +427,9 @@ importers:
       '@packages/tsconfig':
         specifier: workspace:*
         version: link:../tsconfig
+      '@types/node':
+        specifier: ^26.1.1
+        version: 26.1.1
       tsx:
         specifier: ^4.21.0
         version: 4.21.0
