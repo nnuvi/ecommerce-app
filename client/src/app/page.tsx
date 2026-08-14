@@ -1,5 +1,7 @@
 import Image from "next/image";
 import ProductList from "../components/ProductList";
+import { Suspense } from "react";
+import { ProductCardSkeleton } from "@/components/skeleton/ProductCardSkeleton";
 
 const Homepage = async ({
   searchParams,
@@ -27,7 +29,9 @@ const Homepage = async ({
           className="object-cover"
         />
       </div> */}
-      <ProductList category={category} params={"homepage"} />
+      <Suspense fallback={<ProductCardSkeleton count={8} />}>
+        <ProductList category={category} params={"homepage"} />
+      </Suspense>
     </div>
   );
 };

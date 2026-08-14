@@ -4,6 +4,7 @@ import Categories from "./Categories";
 import Filter from "./Filter";
 import ProductCard from "./ProductCard";
 import { Suspense } from "react";
+import { EmptyState } from "./ui/EmptyState";
 
 const fetchProducts = async ({
   category,
@@ -52,6 +53,29 @@ const ProductList = async ({
     ...(sort && { sort }),
     ...(search && { search }),
   });
+
+  if (products.length === 0) {
+    return (
+      <EmptyState
+        title="No products found"
+        description={
+          search
+            ? `No products found for "${search}".`
+            : category
+              ? `No products found in category "${category}".`
+              : "Try changing your search or filters."
+        }
+        action={
+          search || category ? (
+            <Link href="/products" className="text-sm text-gray-500 underline">
+              View all products
+            </Link>
+          ) : null
+        }
+      />
+    );
+  }
+
   return (
     <div className="w-full">
       <Suspense fallback={null}>

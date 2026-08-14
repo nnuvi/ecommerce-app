@@ -7,6 +7,7 @@ import { ArrowRight, Trash2 } from "lucide-react";
 import ShippingForm from "../../components/ShippingForm";
 import useCartStore from "../store/cartStore";
 import StripePaymentForm from "../../components/StripePaymentForm";
+import { CartSkeleton } from "../../components/skeleton/CartSkeleton";
 
 const steps = [
   {
@@ -27,12 +28,16 @@ const CartPage = () => {
   const [activeStep, setActiveStep] = useState(1);
   const [shippingForm, setShippingForm] = useState<ShippingFormInputs>();
 
-  const { cart, removeFromCart } = useCartStore();
+  const { cart, removeFromCart, hasHydrated } = useCartStore();
 
   const subtotal = cart.reduce(
     (acc, item) => acc + item.price * item.quantity,
     0,
   );
+
+  if (!hasHydrated) {
+    return <CartSkeleton count={3} />;
+  }
 
   return (
     <div className="flex flex-col gap-8 items-center mt-12">
