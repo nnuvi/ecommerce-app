@@ -1,20 +1,6 @@
-import ProductInteraction from "./../../../components/ProductIteractions";
-import type { ProductType } from "@packages/types";
+import { fetchProduct } from "@/services/products";
 import Image from "next/image";
-
-const fetchProduct = async (id: string): Promise<ProductType> => {
-  console.log(`Fetch: Fetching product with ID: ${id}`);
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_PRODUCT_SERVICE_URL}/products/${id}`,
-    {
-      cache: "no-store",
-    },
-  );
-  if (!res.ok) {
-    throw new Error("Failed to fetch product");
-  }
-  return res.json();
-};
+import ProductInteraction from "./../../../components/ProductIteractions";
 
 export const generateMetadata = async ({
   params,
@@ -36,15 +22,15 @@ const ProductPage = async ({
   params: Promise<{ id: string }>;
   searchParams: Promise<{ color: string; size: string }>;
 }) => {
-  console.log(`Page: Received params:`, await params);
-  console.log(`Page: Received searchParams:`, await searchParams);
+  // console.log(`Page: Received params:`, await params);
+  // console.log(`Page: Received searchParams:`, await searchParams);
 
   const product = await fetchProduct((await params).id);
   const { size, color } = await searchParams;
 
-  console.log(`Page: Fetched product:`, product);
-  console.log(`Page: Selected size:`, size);
-  console.log(`Page: Selected color:`, color);
+  // console.log(`Page: Fetched product:`, product);
+  // console.log(`Page: Selected size:`, size);
+  // console.log(`Page: Selected color:`, color);
 
   const selectedSize = size || (product.sizes[0] as string);
   const selectedColor = color || (product.colors[0] as string);

@@ -4,7 +4,7 @@ export type FeedbackType = "success" | "error" | "warning" | "info" | "confirm";
 
 export interface FeedbackData {
   type: FeedbackType;
-  title: string;
+  title?: string;
   message?: string;
   confirmText?: string;
   cancelText?: string;
@@ -36,10 +36,16 @@ export default function FeedbackModal({
             {feedback.type === "confirm" && "?"}
           </div>
 
-          <h2 className="mt-4 text-lg font-semibold">{feedback.title}</h2>
+          {(feedback.title || feedback.message) && (
+            <div className="mt-4">
+              {feedback.title && (
+                <h2 className="text-lg font-semibold mb-2">{feedback.title}</h2>
+              )}
 
-          {feedback.message && (
-            <p className="mt-2 text-sm text-gray-500">{feedback.message}</p>
+              {feedback.message && (
+                <p className="text-sm text-gray-500">{feedback.message}</p>
+              )}
+            </div>
           )}
         </div>
 

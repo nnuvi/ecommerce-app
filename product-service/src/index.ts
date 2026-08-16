@@ -5,7 +5,7 @@ import { clerkMiddleware } from "@clerk/express";
 import { shouldBeUser } from "./middleware/authMiddleware.js";
 import productRouter from "./routes/product.route.js";
 import categoryRouter from "./routes/category.route.js";
-import { logger, handleLogRequest } from "@packages/logger/server";
+import { logger } from "@packages/logger/server";
 
 dotenv.config();
 
@@ -39,7 +39,7 @@ app.get("/health", shouldBeUser, (req, res) => {
   });
 });
 
-app.post("/logs", handleLogRequest);
+// app.post("/logs", handleLogRequest);
 app.use("/products", productRouter);
 app.use("/categories", categoryRouter);
 

@@ -1,42 +1,17 @@
-import { ProductsType } from "@packages/types";
+"use client";
+
+import { useGetProducts } from "@/hooks/products";
 import Link from "next/link";
+import { Suspense } from "react";
 import Categories from "./Categories";
 import Filter from "./Filter";
 import ProductCard from "./ProductCard";
-import { Suspense } from "react";
 import { EmptyState } from "./ui/EmptyState";
+import { ErrorState } from "./ui/ErrorState";
+import { ProductCardSkeleton } from "./skeleton/ProductCardSkeleton";
+import { logger } from "@packages/logger/browser";
 
-const fetchProducts = async ({
-  category,
-  sort,
-  search,
-  params,
-}: {
-  category?: string;
-  sort?: string;
-  search?: string;
-  params?: string;
-}): Promise<ProductsType> => {
-  console.log("Fetching products with params:", {
-    category,
-    sort,
-    search,
-    params,
-  });
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_PRODUCT_SERVICE_URL}/products?` +
-      new URLSearchParams({
-        ...(category ? { category } : {}),
-        sort: sort || "newest",
-        ...(search ? { search } : {}),
-        ...(params ? { params } : {}),
-      }),
-  );
-  const data = await res.json();
-  return data.products;
-};
-
-const ProductList = async ({
+const ProductList = ({
   category,
   sort,
   search,
@@ -47,14 +22,30 @@ const ProductList = async ({
   search?: string;
   params: "homepage" | "products";
 }) => {
-  const products = await fetchProducts({
+  const {
+    data: products,
+    isPending,
+    isError,
+    isRefetching,
+    refetch,
+  } = useGetProducts({
     params,
     ...(category && { category }),
     ...(sort && { sort }),
     ...(search && { search }),
   });
 
-  if (products.length === 0) {
+  logger.debug("Fetched products ProductList:", {
+    isPending,
+    isError,
+    isRefetching,
+  });
+
+  if (isPending || isRefetching) {
+    return <ProductCardSkeleton count={8} />;
+  }
+
+  if (products?.length === 0) {
     return (
       <EmptyState
         title="No products found"
@@ -76,6 +67,18 @@ const ProductList = async ({
     );
   }
 
+  if (isError) {
+    return (
+      <ErrorState
+        title={"Couldn't load products"}
+        description={
+          "Something went wrong while loading the products. Please try again."
+        }
+        onRetry={refetch}
+      />
+    );
+  }
+
   return (
     <div className="w-full">
       <Suspense fallback={null}>
@@ -83,9 +86,10 @@ const ProductList = async ({
       </Suspense>
       {params === "products" && <Filter />}
       <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-12">
-        {products.map((product) => (
-          <ProductCard key={product.id} product={product} />
-        ))}
+        {products &&
+          products.map((product) => (
+            <ProductCard key={product.id} product={product} />
+          ))}
       </div>
       <Link
         href={category ? `/products/?category=${category}` : "/products"}

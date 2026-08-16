@@ -1,34 +1,17 @@
 "use client";
 
-import { loadStripe } from "@stripe/stripe-js";
-import { Elements } from "@stripe/react-stripe-js";
+import { fetchClientSecret } from "@/services/payments";
 import { useAuth } from "@clerk/nextjs";
+import { ShippingFormInputs } from "@packages/types";
+import { Elements } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
 import { useEffect, useState } from "react";
-import { CartItemsType, ShippingFormInputs } from "@packages/types";
-import CheckoutForm from "./CheckoutForm";
 import useCartStore from "../app/store/cartStore";
+import CheckoutForm from "./CheckoutForm";
 
 const stripePromise = loadStripe(
   process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!,
 );
-
-const fetchClientSecret = async (cart: CartItemsType, token: string) => {
-  return fetch(
-    `${process.env.NEXT_PUBLIC_PAYMENT_SERVICE_URL}/sessions/create-checkout-session`,
-    {
-      method: "POST",
-      body: JSON.stringify({
-        cart,
-      }),
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    },
-  )
-    .then((response) => response.json())
-    .then((json) => json.clientSecret);
-};
 
 const StripePaymentForm = ({
   shippingForm,
@@ -41,28 +24,9 @@ const StripePaymentForm = ({
   const [token, setToken] = useState<string | null>(null);
   const [clientSecret, setClientSecret] = useState<string | null>(null);
 
-  // useEffect(() => {
-  //   const createPayment = async () => {
-  //     const token = await getToken();
-
-  //     if (!token || cart.length === 0) return;
-
-  //     const secret = await fetchClientSecret(cart, token);
-
-  //     setClientSecret(secret);
-  //   };
-
-  //   createPayment();
-  // }, [cart, getToken]);
-
-  // if (!clientSecret) {
-  //   // console.log(" But Here, Payment intent secret key: ", clientSecret);
-  //   return <div className="p-4">Loading secure checkout...</div>;
-  // }
-
   useEffect(() => {
     getToken().then((token) => setToken(token));
-  }, []);
+  }, [getToken]);
 
   useEffect(() => {
     if (token && cart.length > 0) {

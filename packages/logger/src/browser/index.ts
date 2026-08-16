@@ -1,6 +1,6 @@
-import { browserLogger } from "./browser.js";
+import { loggerBrowser } from "./browser.js";
 
-export const logger = browserLogger;
+export const logger = loggerBrowser;
 
-export const createLogger = (bindings: Record<string, unknown>) =>
-  logger.child(bindings);
+// export const createLogger = (bindings: Record<string, unknown>) =>
+//   logger.child(bindings);

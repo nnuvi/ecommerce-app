@@ -14,24 +14,21 @@ export default async function ProductsPage({
   const { category, sort, search } = await searchParams;
 
   return (
-    console.log("ProductsPage searchParams:", { category, sort, search }),
-    (
-      <div>
-        <Suspense fallback={<ProductCardSkeleton count={8} />}>
-          <ProductList
-            category={category}
-            sort={sort}
-            search={search}
-            params="products"
-          />
-        </Suspense>
-        {/* <ProductList
+    <div>
+      <Suspense fallback={<ProductCardSkeleton count={8} />}>
+        <ProductList
+          category={category}
+          sort={sort}
+          search={search}
+          params="products"
+        />
+      </Suspense>
+      {/* <ProductList
           category={category}
           sort={sort}
           search={search}
           params="products"
         /> */}
-      </div>
-    )
+    </div>
   );
 }

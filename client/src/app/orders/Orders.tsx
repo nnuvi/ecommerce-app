@@ -5,7 +5,6 @@ import { EmptyState } from "@/components/ui/EmptyState";
 import { ErrorState } from "@/components/ui/ErrorState";
 import { useGetOrders } from "@/hooks/orders";
 import OrderProductCard from "@/components/OrderProductCard";
-import { logger } from "@packages/logger/browser";
 
 export default function OrdersPage() {
   const {
@@ -16,17 +15,15 @@ export default function OrdersPage() {
     refetch,
   } = useGetOrders();
 
-  logger.debug("Fetched products orders:", { orders });
-
   if (isPending || isRefetching) {
     return <OrderListSkeleton count={5} />;
   }
 
-  if (orders?.length === 0) {
+  if (!orders || orders.length === 0) {
     return (
       <EmptyState
-        title="No orders yet"
-        description="You haven't placed any orders yet."
+        title="No orders found!"
+        description="No orders found currently"
       />
     );
   }

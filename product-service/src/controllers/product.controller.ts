@@ -96,5 +96,5 @@ export const getProducts = async (req: Request, res: Response) => {
     take: limit ? Number(limit) : undefined,
   });
 
-  return res.status(200).json({ products });
+  return res.status(200).json(products);
 };

@@ -1,6 +1,9 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  env: {
+    NEXT_PUBLIC_LOGGER_SERVICE: "client",
+  },
   images: {
     remotePatterns: [
       // Pexels
@@ -29,6 +32,16 @@ const nextConfig: NextConfig = {
         pathname: "/**",
       },
     ],
+  },
+
+  logging: {
+    browserToTerminal: true,
+    fetches: {
+      fullUrl: true,
+      hmrRefreshes: true,
+    },
+    serverFunctions: true,
+    incomingRequests: true,
   },
 };
 
